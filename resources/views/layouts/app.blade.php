@@ -24,7 +24,7 @@
     </main>
 
     <footer>
-        <!-- Add your footer content here -->
+        footer
     </footer>
 </body>
 </html>
