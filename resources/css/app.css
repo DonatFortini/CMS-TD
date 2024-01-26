@@ -2,3 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+
+:root {
+    --violet: #7F0C9B;
+    --violet-light: #9F4BAA;
+    --green:#00CA7C;
+    --dark:#252525;
+}
+
+/* custom style */
+
+
+.navbar {
+    background-color: var(--dark);
+    color: var(--violet-light);
+}
+
+.navbar a:hover {
+    color: white;
+    background-color: var(--violet-light);
+    border-radius: 5px;
+    height: 100%;
+    transition-duration: 0.4s;
+}
+
+.navbar a.active {
+    color: var(--dark);
+}
+
+.section-0 {
+    background-color: var(--green);
+}
+
+.section-1 {
+    background-color: var(--violet);
+}
+
+.section-2 {
+    background-color: var(--dark);
+}
+
+.neon {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 255, 255, 0.8),
+        0 0 30px rgba(255, 255, 255, 0.8),
+        0 0 40px rgba(255, 255, 255, 0.8);
+}
+
+.content-title {
+    color: var(--violet-light);
+}
+
+.content-text {
+    color: #FFFFFF;
+}
+
+.content-image {
+    max-width: 100%;
+    height: auto;
+}
