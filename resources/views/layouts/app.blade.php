@@ -19,7 +19,7 @@
                     <div class="text-xl font-bold"><a href="{{ route('home') }}">CMSTD</a></div>
                 </div>
                 <div class="flex space-x-4">
-                    <a href="{{ route('connect') }}" class="hover:text-violet-500">Se connecter</a>
+                    <a href="{{ route('login') }}" class="hover:text-violet-500">Se connecter</a>
                     <a href="{{ route('contact') }}" class="hover:text-violet-500">Contact</a>
                 </div>
             </div>
