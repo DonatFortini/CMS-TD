@@ -15,7 +15,10 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['guest'])->group(function () {
     // Routes accessibles uniquement aux utilisateurs non connectés
     Route::get('/login', 'App\Http\Controllers\AuthController@showLoginForm')->name('login');
+    Route::post('/login', 'App\Http\Controllers\AuthController@login')->name('login');
     Route::get('/register', 'App\Http\Controllers\AuthController@showRegistrationForm')->name('register');
+    Route::post('/register', 'App\Http\Controllers\AuthController@register')->name('register');
+
 });
 
 Route::get('/', function () {
