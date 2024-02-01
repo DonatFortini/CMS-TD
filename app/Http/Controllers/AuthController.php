@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Utilisateur; 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -21,15 +22,19 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-    
-        if (Auth::attempt($credentials)) {
-            // L'authentification a réussi
-            return redirect()->intended('/backoffice'); // Redirigez l'utilisateur où vous le souhaitez après la connexion réussie.
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        $user = Utilisateur::where('email', $request->email)->first();
+
+        if ($user && Hash::check($request->password, $user->mdp)) {
+            Auth::login($user);
+            return redirect('/backoffice');
+        } else {
+            return redirect('/login')->with('error', 'Email ou mot de passe incorrect.');
         }
-    
-        // L'authentification a échoué
-        return redirect()->back()->withErrors(['email' => 'Les informations de connexion sont incorrectes.'])->withInput($request->only('email'));
+
     }
     
 

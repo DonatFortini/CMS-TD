@@ -9,7 +9,8 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/backoffice', 'BackOfficeController@index')->name('backoffice.index');
+    Route::get('/backoffice', 'App\Http\Controllers\BackOfficeController@index')->name('backOffice');
+    Route::get('/dashboard', 'App\Http\Controllers\DashBoardController@index')->name('dashboard');
 });
 
 Route::middleware(['guest'])->group(function () {

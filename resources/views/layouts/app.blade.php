@@ -25,6 +25,7 @@
                         </form>
                     @else
                         <a href="{{ route('login') }}" class="hover:text-violet-500">Se connecter</a>
+                        <a href="{{ route('register') }}" class="hover:text-violet-500">S'enregistrer</a>
                     @endif
                     <a href="{{ route('contact') }}" class="hover:text-violet-500">Contact</a>
                 </div>

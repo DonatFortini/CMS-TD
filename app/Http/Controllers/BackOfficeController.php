@@ -14,7 +14,7 @@ class BackOfficeController extends Controller
     public function index()
     {
         // Logique du back-office
-        return view('backoffice.index');
+        return view('backOffice');
     }
 
     // Autres méthodes pour gérer le back-office

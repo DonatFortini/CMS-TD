@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>This is the back office</h1>
+@extends('layouts.app')
 
-</body>
-</html>
+@section('content')
+    <h1>This is the back office</h1>
+@endsection
