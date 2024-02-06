@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@vite('resources/js/dashboard.js')
 @section('content')
 <div class="pt-24 container mx-auto px-4 py-8">
     <div class="mb-6">
@@ -8,9 +8,22 @@
     </div>
 
     <div class="mb-6">
-        <a href="/nouveau-site" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button id="newSiteBut" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Créer un Nouveau Site
-        </a>
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div id="siteModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" id="modalClose">&times;</span>
+            <form action="/backOffice" id="siteForm">
+                @csrf
+                <label for="website_name">Nom du site:</label>
+                <input type="text" id="website_name" name="website_name">
+                <button type="submit">Créer</button>
+            </form>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

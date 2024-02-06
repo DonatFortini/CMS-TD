@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         if ($user && Hash::check($request->password, $user->mdp)) {
             Auth::login($user);
-            return redirect('/backoffice');
+            return redirect('/dashboard');
         } else {
             return redirect('/login')->with('error', 'Email ou mot de passe incorrect.');
         }
@@ -60,8 +60,8 @@ class AuthController extends Controller
         // Authentifier l'utilisateur après l'inscription réussie
         Auth::login($utilisateur);
     
-        // Rediriger l'utilisateur vers une page spécifique, par exemple la page d'accueil du back-office
-        return redirect('/backoffice')->with('success', 'Inscription réussie et connexion effectuée.');
+        
+        return redirect('/dashboard')->with('success', 'Inscription réussie et connexion effectuée.');
     }
 
     public function logout(Request $request)

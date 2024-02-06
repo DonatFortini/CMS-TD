@@ -9,9 +9,10 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/backoffice', 'App\Http\Controllers\BackOfficeController@index')->name('backOffice');
     Route::get('/dashboard', 'App\Http\Controllers\DashBoardController@index')->name('dashboard');
 });
+
+Route::get('/backOffice', 'App\Http\Controllers\BackOfficeController@index')->name('backOffice');
 
 Route::middleware(['guest'])->group(function () {
     // Routes accessibles uniquement aux utilisateurs non connectés
@@ -25,4 +26,3 @@ Route::middleware(['guest'])->group(function () {
 Route::get('/', function () {
     return view('home');
 })->name('home');
-
