@@ -1,4 +1,4 @@
-document.addEventListener('scroll', (e) => {
+document.addEventListener('wheel', (e) => {
     e.preventDefault();
     const scrollDirection = e.deltaY > 0 ? 'up' : 'down';
     const sections = document.querySelectorAll('[id^="section-"]');
