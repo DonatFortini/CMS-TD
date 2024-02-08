@@ -24,6 +24,8 @@
                         @csrf
                         <button type="submit" class="hover:text-violet-500">Déconnexion</button>
                     </form>
+
+                    <a href="{{ route('dashboard') }}" class="hover:text-violet-500">Dashboard</a>
                     @else
                     <a href="{{ route('login') }}" class="hover:text-violet-500">Se connecter</a>
                     <a href="{{ route('register') }}" class="hover:text-violet-500">S'enregistrer</a>
