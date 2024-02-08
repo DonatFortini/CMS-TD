@@ -3,17 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Site;
 
 class BackOfficeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth'); // Assure que l'utilisateur est connecté
+        $this->middleware('auth');
     }
+
+    public function addSite(Request $request)
+    {
+        $validatedData = $request->validate([
+            'website_name' => 'required|string|max:255',
+        ]);
+
+        $site = Site::create([
+            'nom' => $validatedData['website_name'],
+            'dns' => sprintf("%s/%s", auth()->user()->nom, $validatedData['website_name']),
+            'idUtilisateur' => auth()->user()->getAuthIdentifier(),
+        ]);
+
+        if ($site) {
+            return redirect()->route('backOffice');
+        } else {
+            return redirect()->back()->with('error', 'Failed to create website. Please try again.');
+        }
+    }
+
 
     public function index()
     {
-
         return view('backOffice');
     }
 

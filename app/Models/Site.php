@@ -10,12 +10,10 @@ class Site extends Model
 
     protected $primaryKey = 'idSite'; // Laravel utilise 'id' comme clé primaire par défaut, donc nous devons spécifier la vôtre
 
-    public $incrementing = false; // Mettez cela à true si votre clé primaire est auto-incrémentée
+    public $incrementing = true; // Mettez cela à true si votre clé primaire est auto-incrémentée
 
     protected $fillable = [
-        'nom', 
-        'dns',
-        // 'idUtilisateur' est généralement géré séparément comme une clé étrangère, voir ci-dessous
+        'nom', 'dns', 'idUtilisateur'
     ];
 
     // Si vous utilisez les timestamps Laravel (created_at et updated_at), assurez-vous que votre table les inclut.

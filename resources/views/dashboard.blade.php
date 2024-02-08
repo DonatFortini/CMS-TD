@@ -17,7 +17,7 @@
     <div id="siteModal" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close" id="modalClose">&times;</span>
-            <form action="/backOffice" id="siteForm">
+            <form action="/backOffice" id="siteForm" method="POST">
                 @csrf
                 <label for="website_name">Nom du site:</label>
                 <input type="text" id="website_name" name="website_name">

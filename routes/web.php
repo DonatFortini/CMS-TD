@@ -13,6 +13,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/backOffice', 'App\Http\Controllers\BackOfficeController@index')->name('backOffice');
+Route::post('/backOffice', 'App\Http\Controllers\BackOfficeController@addSite')->name('backOffice.addSite');
+
 
 Route::middleware(['guest'])->group(function () {
     // Routes accessibles uniquement aux utilisateurs non connectés
