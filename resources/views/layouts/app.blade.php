@@ -14,7 +14,7 @@
             <div class="container mx-auto flex justify-between items-center">
                 <div class="flex items-center">
                     <div class="w-16">
-                        <img src="{{ asset('css/logo.png') }}" alt="Logo">
+                        <img src="{{ asset('assets/logo.png') }}" alt="Logo">
                     </div>
                     <div class="text-xl font-bold"><a href="{{ route('home') }}">CMSTD</a></div>
                 </div>
