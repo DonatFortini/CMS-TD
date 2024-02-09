@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 Route::post('/logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
 
 Route::get('/contact', function () {
@@ -12,8 +13,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', 'App\Http\Controllers\DashBoardController@index')->name('dashboard');
 });
 
-Route::get('/backOffice', 'App\Http\Controllers\BackOfficeController@index')->name('backOffice');
+//Route::get('/backOffice', 'App\Http\Controllers\BackOfficeController@index')->name('backOffice');
 Route::post('/backOffice', 'App\Http\Controllers\BackOfficeController@addSite')->name('backOffice.addSite');
+Route::get('/backOffice/{dns}', 'App\Http\Controllers\BackOfficeController@index')->name('backOffice')->where(['dns' => 'backOffice/[^/]+']);
 
 
 Route::middleware(['guest'])->group(function () {

@@ -12,9 +12,8 @@
 <body class="flex-column h-screen w-screen">
     <nav class="bg-gray-800 ">
         <ul class="flex items-center justify-between px-4 py-2">
-            <li>
-                <a href="{{ route('backOffice') }}" class="text-white font-bold">Home</a>
-            </li>
+            <li><img src="{{ asset('css/logo.png') }}" href="{{ route('backOffice') }}" > </img> </li>
+            <li><a href="{{route('home')}}" class="text-white font-bold">home</a></li>
         </ul>
     </nav>
 
@@ -41,10 +40,8 @@
             <div id="section-2" class="w-screen hidden">
                 <section class="w-1/5">
                     <ul id="liste_page">
-                        <li><a id="page">Page</a></li>
-                        <li><a id="article">Article</a></li>
-                        <li><a id="categorie">Catégorie</a></li>
-                        <li><a id="tag">Tag</a></li>
+                        @foreach ($pages as $page)
+                        <li>{{ $page->nom }}</li>
                     </ul>
                 </section>
 

@@ -25,7 +25,7 @@ class BackOfficeController extends Controller
         ]);
 
         if ($site) {
-            return redirect()->route('backOffice');
+            return redirect()->route(sprintf('backOffice/%s', $site->dns));
         } else {
             return redirect()->back()->with('error', 'Failed to create website. Please try again.');
         }
@@ -34,6 +34,7 @@ class BackOfficeController extends Controller
 
     public function index()
     {
+        $pages = Site::find(1)->pages;
         return view('backOffice');
     }
 

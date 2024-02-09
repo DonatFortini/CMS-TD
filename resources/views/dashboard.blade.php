@@ -31,7 +31,7 @@
         <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition duration-300">
             <h2 class="text-xl font-semibold mb-2">{{ $site->nom }}</h2> <!-- Utilisation de l'attribut 'nom' du modèle Site -->
             <p class="text-gray-600 mb-4">DNS : {{ $site->dns }}</p> <!-- Affichage de l'attribut 'dns' -->
-            <a href="/modifier-site/{{ $site->idSite }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs">
+            <a href="/backOffice/{{ $site->dns }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs">
                 Modifier
             </a>
             <a href="/visualiser-site/{{ $site->idSite }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-xs ml-2">
