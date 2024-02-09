@@ -35,6 +35,7 @@ class BackOfficeController extends Controller
     public function index()
     {
         $pages = Site::find(1)->pages;
+        $commentaires = Site::find(1)->commentaires;
         return view('backOffice');
     }
 

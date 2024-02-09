@@ -68,18 +68,30 @@
                 <h1>Gestion des commentaires</h1>
                 <p>Visualisez et modérez les commentaires.</p>
                 <div id="commentaires">
-
+                    <ul>
+                        @foreach ($commentaires as $commentaire)
+                        <li>
+                            <p>{{ $commentaire->contenu }}</p>
+                            <p>{{ $commentaire->auteur }}</p>
+                            <p>{{ $commentaire->date }}</p>
+                            <button class="bg-red-500">Supprimer</button>
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
+
             <!-- section-4 -->
             <div id="section-4" class="hidden w-screen">
                 <h1>Mes pages</h1>
                 <p>Visualisez et modifiez vos pages.</p>
-                <div id="pages">
+                <div id="pages"></div>
+            </div>
 
-                </div>
         </main>
+
     </div>
+
 </body>
 
 </html>
