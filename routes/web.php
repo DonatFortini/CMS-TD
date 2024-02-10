@@ -11,12 +11,12 @@ Route::get('/contact', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', 'App\Http\Controllers\DashBoardController@index')->name('dashboard');
+    Route::get('/backOffice/{dns}', 'App\Http\Controllers\BackOfficeController@index')
+    ->name('backOffice')
+    ->middleware('check.site.owner');
 });
 
-//Route::get('/backOffice', 'App\Http\Controllers\BackOfficeController@index')->name('backOffice');
 Route::post('/backOffice', 'App\Http\Controllers\BackOfficeController@addSite')->name('backOffice.addSite');
-Route::get('/backOffice/{dns}', 'App\Http\Controllers\BackOfficeController@index')->name('backOffice')->where(['dns' => 'backOffice/[^/]+']);
-
 
 Route::middleware(['guest'])->group(function () {
     // Routes accessibles uniquement aux utilisateurs non connectés
@@ -24,7 +24,6 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', 'App\Http\Controllers\AuthController@login')->name('login');
     Route::get('/register', 'App\Http\Controllers\AuthController@showRegistrationForm')->name('register');
     Route::post('/register', 'App\Http\Controllers\AuthController@register')->name('register');
-
 });
 
 Route::get('/', function () {

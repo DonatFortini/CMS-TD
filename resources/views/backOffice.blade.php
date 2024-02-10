@@ -12,19 +12,19 @@
 <body class="flex-column h-screen w-screen">
     <nav class="bg-gray-800 ">
         <ul class="flex items-center justify-between px-4 py-2">
-            <li><img src="{{ asset('css/logo.png') }}" href="{{ route('backOffice') }}" > </img> </li>
-            <li><a href="{{route('home')}}" class="text-white font-bold">home</a></li>
+            <li><img src="{{ asset('css/logo.png') }}" href="{{ route('backOffice', ['dns' => $dns]) }}"> </img> </li>
+            <li><a href="{{ route('home') }}" class="text-white font-bold">Home</a></li>
         </ul>
     </nav>
 
     <div id="content" class="flex h-5/6">
         <section class="w-1/6 h-screen bg-gray-200">
-            <h1>fonctionalités</h1>
+            <h1>Fonctionnalités</h1>
             <ul style="list-style-type: none; padding: 0;">
                 <li id="stats" class="hover:bg-gray-500 active"><a>Statistiques du site</a></li>
                 <li id="create" class="hover:bg-gray-500"><a>Création de contenu</a></li>
                 <li id="comments" class="hover:bg-gray-500"><a>Gestion des commentaires</a></li>
-                <li id="pages" class=" hover:bg-gray-500"><a>Mes pages</a></li>
+                <li id="pages" class="hover:bg-gray-500"><a>Mes pages</a></li>
             </ul>
         </section>
 
@@ -40,8 +40,9 @@
             <div id="section-2" class="w-screen hidden">
                 <section class="w-1/5">
                     <ul id="liste_page">
-                        @foreach ($pages as $page)
-                        <li>{{ $page->nom }}</li>
+                    @foreach ($pages as $page)
+                        <li>{{ $page->dns }}</li> <!-- Assurez-vous que 'dns' est le bon nom d'attribut pour votre modèle Page -->
+                    @endforeach
                     </ul>
                 </section>
 
@@ -69,14 +70,15 @@
                 <p>Visualisez et modérez les commentaires.</p>
                 <div id="commentaires">
                     <ul>
-                        @foreach ($commentaires as $commentaire)
+                    @foreach ($commentaires as $commentaire)
                         <li>
                             <p>{{ $commentaire->contenu }}</p>
-                            <p>{{ $commentaire->auteur }}</p>
-                            <p>{{ $commentaire->date }}</p>
+                            <!-- Assurez-vous d'ajouter 'auteur' à votre modèle Commentaire si vous souhaitez l'afficher -->
+                            <!-- <p>{{ $commentaire->auteur }}</p> -->
+                            <p>{{ $commentaire->date_creation }}</p> <!-- Assurez-vous que 'date_creation' est le bon nom d'attribut pour votre modèle Commentaire -->
                             <button class="bg-red-500">Supprimer</button>
                         </li>
-                        @endforeach
+                    @endforeach
                     </ul>
                 </div>
             </div>

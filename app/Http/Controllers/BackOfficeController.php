@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Site;
+use App\Models\Commentaire;
+use App\Models\Page;
 
 class BackOfficeController extends Controller
 {
@@ -32,12 +34,28 @@ class BackOfficeController extends Controller
     }
 
 
-    public function index()
+    public function index($siteDns)
     {
-        $pages = Site::find(1)->pages;
-        $commentaires = Site::find(1)->commentaires;
-        return view('backOffice');
+        $site = Site::where('dns', $siteDns)->first();
+    
+        if (!$site) {
+            abort(404, 'Site not found');
+        }
+    
+        // Récupérez les objets Page complets au lieu des ID
+        $pages = Page::where('idSite', $site->idSite)->get();
+    
+        $commentaires = Commentaire::whereIn('idPage', $pages->pluck('idPage'))->get();
+    
+        return view('backOffice', [
+            'site' => $site,
+            'commentaires' => $commentaires,
+            'pages' => $pages,
+            'dns' => $siteDns
+        ]);
     }
+    
+    
 
-    // Autres méthodes pour gérer le back-office
+  
 }
