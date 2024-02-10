@@ -1,5 +1,7 @@
 @extends('layouts.app')
+
 @vite('resources/js/dashboard.js')
+
 @section('content')
 <div class="pt-24 container mx-auto px-4 py-8">
     <div class="mb-6">
@@ -8,22 +10,9 @@
     </div>
 
     <div class="mb-6">
-        <button id="newSiteBut" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <a href="{{ route('createSite') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Créer un Nouveau Site
-        </button>
-    </div>
-
-    <!-- Modal -->
-    <div id="siteModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close" id="modalClose">&times;</span>
-            <form action="/backOffice" id="siteForm" method="POST">
-                @csrf
-                <label for="website_name">Nom du site:</label>
-                <input type="text" id="website_name" name="website_name">
-                <button type="submit">Créer</button>
-            </form>
-        </div>
+        </a>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -31,7 +20,7 @@
         <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition duration-300">
             <h2 class="text-xl font-semibold mb-2">{{ $site->nom }}</h2> <!-- Utilisation de l'attribut 'nom' du modèle Site -->
             <p class="text-gray-600 mb-4">DNS : {{ $site->dns }}</p> <!-- Affichage de l'attribut 'dns' -->
-            <a href="/backOffice/{{ $site->dns }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs">
+            <a href="{{ route('backOffice', ['dns' => $site->dns]) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs">
                 Modifier
             </a>
             <a href="/visualiser-site/{{ $site->idSite }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-xs ml-2">

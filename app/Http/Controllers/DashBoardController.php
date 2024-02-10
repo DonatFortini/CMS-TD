@@ -21,4 +21,11 @@ class DashBoardController extends Controller
         // Passez les sites à la vue
         return view('dashboard', compact('sites'));
     }
+    
+    public function createSite()
+    {
+        // Vous pouvez passer des données supplémentaires à la vue si nécessaire, comme une liste de templates disponibles
+        return view('addSite');
+    }
+
 }

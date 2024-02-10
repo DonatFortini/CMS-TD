@@ -11,6 +11,7 @@ Route::get('/contact', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', 'App\Http\Controllers\DashBoardController@index')->name('dashboard');
+    Route::get('/create-site', 'App\Http\Controllers\DashBoardController@createSite')->name('createSite');
     Route::get('/backOffice/{dns}', 'App\Http\Controllers\BackOfficeController@index')
     ->name('backOffice')
     ->middleware('check.site.owner');

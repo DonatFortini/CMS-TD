@@ -54,6 +54,13 @@ class BackOfficeController extends Controller
             'dns' => $siteDns
         ]);
     }
+
+    public function createSite()
+    {
+        // Vous pouvez passer des données supplémentaires à la vue si nécessaire, comme une liste de templates disponibles
+        return view('createSite');
+    }
+    
     
     
 
