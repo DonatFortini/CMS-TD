@@ -11,55 +11,52 @@
 
 <body class="w-full h-full flex-col">
     <header>
-        <nav class="navbar w-full p-4 " style="height:10vh">
-            <div id="content" class="flex flex-col items-center p-6">
-                <!-- Template Selection -->
-                <div class="flex justify-between w-full max-w-4xl mb-6">
-                    <!-- Navbar Selection -->
-                    <div>
-                        <label for="navbar-select">Navbar Template:</label>
-                        <select id="navbar-select">
-                            <option value="burger" <?php echo ($_GET["navbar"]==="burger" ) ? "selected" : "" ; ?>
-                                >Burger
-                            </option>
-                            <option value="classic" <?php echo ($_GET["navbar"]==="classic" ) ? "selected" : "" ; ?>
-                                >Classique</option>
-                            <option value="modern" <?php echo ($_GET["navbar"]==="modern" ) ? "selected" : "" ; ?>
-                                >Modern
-                            </option>
-                        </select>
+        <nav class="navbar top-0 w-full p-4" style="height:10vh;">
+            <div class="container mx-auto flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="w-16">
+                        <img src="{{ asset('assets/logo.png') }}" alt="Logo">
                     </div>
-                    <!-- Main Selection -->
-                    <div>
-                        <label for="main-select">Main Template:</label>
-                        <select id="main-select">
-                            <option value="complex" <?php echo ($_GET["main"]==="complex" ) ? "selected" : "" ; ?>
-                                >Complex
-                            </option>
-                            <option value="modern" <?php echo ($_GET["main"]==="modern" ) ? "selected" : "" ; ?>>Modern
-                            </option>
-                            <option value="simple" <?php echo ($_GET["main"]==="simple" ) ? "selected" : "" ; ?>>Simple
-                            </option>
-                        </select>
-                    </div>
-                    <!-- Footer Selection -->
-                    <div>
-                        <label for="footer-select">Footer Template:</label>
-                        <select id="footer-select">
-                            <option value="complex" <?php echo ($_GET["footer"]==="complex" ) ? "selected" : "" ; ?>
-                                >Complex</option>
-                            <option value="modern" <?php echo ($_GET["footer"]==="modern" ) ? "selected" : "" ; ?>
-                                >Modern</option>
-                            <option value="simple" <?php echo ($_GET["footer"]==="simple" ) ? "selected" : "" ; ?>
-                                >Simple</option>
-                        </select>
-                    </div>
-                    <!-- Color Picker -->
-                    <div>
-                        <label for="color-picker">Main Color:</label>
-                        <input type="color" id="color-picker">
-                    </div>
+                    <div class="text-xl font-bold"><a href="{{ route('home') }}">CMSTD</a></div>
                 </div>
+                <div class="flex space-x-4">
+                    <label for="navbar-select" class="mr-1">Navbar Template:</label> <!-- Reduced margin-right -->
+                    <select id="navbar-select" class="mr-2">
+                        <?php
+                            $navbarOptions = ['burger', 'classic', 'modern'];
+                            $selectedNavbar = $_GET["navbar"] ?? '';
+                            foreach ($navbarOptions as $option) {
+                                $selected = $selectedNavbar === $option ? 'selected' : '';
+                                echo "<option value=\"$option\" $selected>$option</option>";
+                            }
+                            ?>
+                    </select>
+                    <label for="main-select" class="mr-1">Main Template:</label> <!-- Reduced margin-right -->
+                    <select id="main-select" class="mr-2">
+                        <?php
+                            $mainOptions = ['complex', 'modern', 'simple'];
+                            $selectedMain = $_GET["main"] ?? '';
+                            foreach ($mainOptions as $option) {
+                                $selected = $selectedMain === $option ? 'selected' : '';
+                                echo "<option value=\"$option\" $selected>$option</option>";
+                            }
+                            ?>
+                    </select>
+                    <label for="footer-select" class="mr-1">Footer Template:</label> <!-- Reduced margin-right -->
+                    <select id="footer-select" class="mr-2">
+                        <?php
+                            $footerOptions = ['complex', 'modern', 'simple'];
+                            $selectedFooter = $_GET["footer"] ?? '';
+                            foreach ($footerOptions as $option) {
+                                $selected = $selectedFooter === $option ? 'selected' : '';
+                                echo "<option value=\"$option\" $selected>$option</option>";
+                            }
+                            ?>
+                    </select>
+                    <label for="color-picker" class="mr-1">Main Color:</label> <!-- Reduced margin-right -->
+                    <input type="color" id="color-picker">
+                </div>
+            </div>
             </div>
         </nav>
     </header>

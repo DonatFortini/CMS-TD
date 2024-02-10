@@ -10,7 +10,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $params = "modern/modern/modern";
+        $params = "burger/simple/modern";
         $paramsArray = explode('/', $params);
         return view('client', compact('paramsArray'));
     }
