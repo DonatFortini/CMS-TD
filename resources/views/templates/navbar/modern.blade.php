@@ -1,4 +1,3 @@
-@extends('layouts.base')
 @section('navbar')
 <nav class="bg-gradient-to-r from-purple-700 to-indigo-800 shadow-lg">
     <div class="container mx-auto px-4 py-2">

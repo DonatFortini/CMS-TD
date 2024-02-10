@@ -1,4 +1,3 @@
-@extends('layouts.base')
 @section('footer')
 <footer class="bg-gray-900 text-white py-12">
     <div class="container mx-auto flex flex-wrap justify-between px-4">

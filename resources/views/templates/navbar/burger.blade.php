@@ -1,4 +1,3 @@
-@extends('layouts.base')
 @section('navbar')
 <nav class="bg-gray-800 p-4">
     <div class="container mx-auto flex justify-between items-center">

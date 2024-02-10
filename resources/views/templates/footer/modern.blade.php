@@ -1,4 +1,3 @@
-@extends('layouts.base')
 @section('footer')
 <footer class="bg-gray-900 text-white py-8">
     <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center px-4">

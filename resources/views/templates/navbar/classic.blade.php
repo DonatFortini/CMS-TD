@@ -1,4 +1,3 @@
-@extends('layouts.base')
 @section('navbar')
 <nav class="bg-gray-800 shadow-lg">
     <div class="container mx-auto px-4 py-2">

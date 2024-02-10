@@ -11,10 +11,24 @@ Route::get('/contact', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', 'App\Http\Controllers\DashBoardController@index')->name('dashboard');
-    Route::get('/create-site', 'App\Http\Controllers\DashBoardController@createSite')->name('createSite');
+
+    Route::get('/create-site', function () {
+        $navbar = 'burger';
+        $main = 'complex';
+        $footer = 'complex';
+        return redirect("/preview?navbar=$navbar&main=$main&footer=$footer");
+    })->name('createSite');
+
+    Route::get(
+        '/preview',
+        function () {
+            return view('preview');
+        }
+    )->name('preview');
+
     Route::get('/backOffice/{dns}', 'App\Http\Controllers\BackOfficeController@index')
-    ->name('backOffice')
-    ->middleware('check.site.owner');
+        ->name('backOffice')
+        ->middleware('check.site.owner');
 });
 
 Route::post('/backOffice', 'App\Http\Controllers\BackOfficeController@addSite')->name('backOffice.addSite');

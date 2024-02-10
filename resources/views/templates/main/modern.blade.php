@@ -1,4 +1,3 @@
-@extends('layouts.base')
 @section('content')
 <main class="container mx-auto px-4 py-8">
     <article class="max-w-3xl mx-auto">

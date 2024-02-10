@@ -1,4 +1,3 @@
-@extends('layouts.base')
 @section('content')
 <main class="container mx-auto py-8 px-4">
     <article class="prose lg:prose-xl">

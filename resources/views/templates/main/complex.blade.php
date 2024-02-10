@@ -1,4 +1,3 @@
-@extends('layouts.base')
 @section('content')
 <main class="container mx-auto py-8 px-4">
     <article class="grid grid-cols-12 gap-8">
