@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Site;
 use App\Models\Commentaire;
 use App\Models\Page;
+use Illuminate\Support\Facades\Auth;
 
 class BackOfficeController extends Controller
 {
@@ -17,23 +18,33 @@ class BackOfficeController extends Controller
     public function addSite(Request $request)
     {
         $validatedData = $request->validate([
-            'website_name' => 'required|string|max:255',
+            'site_name' => 'required|string|max:255',
+            'navbar_template' => 'required|string|max:255',
+            'main_template' => 'required|string|max:255',
+            'footer_template' => 'required|string|max:255',
+            'color' => 'required|string|max:255',
         ]);
+    
+        $dns = sprintf("%s.%s",  Auth::user()->email, $validatedData['site_name']);
 
         $site = Site::create([
-            'nom' => $validatedData['website_name'],
-            'dns' => sprintf("%s/%s", auth()->user()->nom, $validatedData['website_name']),
-            'idUtilisateur' => auth()->user()->getAuthIdentifier(),
+            'nom' => $validatedData['site_name'],
+            'dns' => $dns,
+            'idUtilisateur' => Auth::user()->idUtilisateur,
+            'pathNavbar' => $validatedData['navbar_template'],
+            'pathFooter' => $validatedData['footer_template'],
+            'pathBody' => $validatedData['main_template'],
+            'couleur' => $validatedData['color'],
         ]);
-
+    
         if ($site) {
-            return redirect()->route(sprintf('backOffice/%s', $site->dns));
+            return redirect()->route('backOffice', ['dns' => $site->dns])->with('success', 'Website created successfully');
         } else {
             return redirect()->back()->with('error', 'Failed to create website. Please try again.');
         }
     }
-
-
+    
+    
     public function index($siteDns)
     {
         $site = Site::where('dns', $siteDns)->first();
@@ -55,11 +66,7 @@ class BackOfficeController extends Controller
         ]);
     }
 
-    public function createSite()
-    {
-        // Vous pouvez passer des données supplémentaires à la vue si nécessaire, comme une liste de templates disponibles
-        return view('createSite');
-    }
+
     
     
     
