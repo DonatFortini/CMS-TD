@@ -29,10 +29,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/backOffice/{dns}', 'App\Http\Controllers\BackOfficeController@index')
         ->name('backOffice')
         ->middleware('check.site.owner');
-    
+
     Route::post('/backOffice', 'App\Http\Controllers\BackOfficeController@addSite')->name('backOffice.addSite');
-    
+
     Route::get("/client", "App\Http\Controllers\ClientController@index")->name('client');
+
+    Route::delete('/comments/{comment}', 'App\Http\Controllers\CommentsController@destroy')->name('comments.destroy');
+
 });
 
 Route::post('/backOffice', 'App\Http\Controllers\BackOfficeController@addSite')->name('backOffice.addSite');

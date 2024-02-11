@@ -6,19 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'CMSTD') }}</title>
     @vite('resources/css/backOffice.css')
+    @vite('resources/css/app.css')
     @vite('resources/js/backOffice.js')
 </head>
 
 <body class="flex-column h-screen w-screen">
-    <nav class="bg-gray-800 ">
-        <ul class="flex items-center justify-between px-4 py-2">
-            <li><img src="{{ asset('css/logo.png') }}" href="{{ route('backOffice', ['dns' => $dns]) }}"> </img> </li>
-            <li><a href="{{ route('home') }}" class="text-white font-bold">Home</a></li>
-        </ul>
+
+    <nav class="navbar top-0 w-full p-4" style="height:10vh;">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-16">
+                    <img src="{{ asset('assets/logo.png') }}" alt="Logo">
+                </div>
+                <div class="text-xl font-bold"><a href="{{ route('home') }}">CMSTD</a></div>
+            </div>
+            <div class="flex space-x-4">
+                @if(Auth::check())
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="hover:text-violet-500">Déconnexion</button>
+                </form>
+
+                <a href="{{ route('dashboard') }}" class="hover:text-violet-500">Dashboard</a>
+                @else
+                <a href="{{ route('login') }}" class="hover:text-violet-500">Se connecter</a>
+                <a href="{{ route('register') }}" class="hover:text-violet-500">S'enregistrer</a>
+                @endif
+                <a href="{{ route('contact') }}" class="hover:text-violet-500">Contact</a>
+            </div>
+        </div>
     </nav>
 
-    <div id="content" class="flex h-5/6">
-        <section class="w-1/6 h-screen bg-gray-200">
+
+    <div id="content" class="flex " style="height:90vh;">
+        <section class="w-1/6 bg-gray-200">
             <h1>Fonctionnalités</h1>
             <ul style="list-style-type: none; padding: 0;">
                 <li id="stats" class="hover:bg-gray-500 active"><a>Statistiques du site</a></li>
@@ -28,10 +49,10 @@
             </ul>
         </section>
 
-        <main class="w-5/6 h-screen flex">
+        <main class="w-5/6  flex">
 
             <!-- section-1 -->
-            <div id="section-1" class="flex w-screen">
+            <div id="section-1" class="flex-col bg-slate-500 w-screen">
                 <h1>Tableau de Bord</h1>
                 <p>Visualisez vos statistiques.</p>
             </div>
@@ -40,9 +61,10 @@
             <div id="section-2" class="w-screen hidden">
                 <section class="w-1/5">
                     <ul id="liste_page">
-                    @foreach ($pages as $page)
-                        <li>{{ $page->dns }}</li> <!-- Assurez-vous que 'dns' est le bon nom d'attribut pour votre modèle Page -->
-                    @endforeach
+                        @foreach ($pages as $page)
+                        <li>{{ $page->dns }}</li>
+                        <!-- Assurez-vous que 'dns' est le bon nom d'attribut pour votre modèle Page -->
+                        @endforeach
                     </ul>
                 </section>
 
@@ -65,21 +87,39 @@
             </div>
 
             <!-- section-3 -->
-            <div id="section-3" class="hidden w-screen">
-                <h1>Gestion des commentaires</h1>
-                <p>Visualisez et modérez les commentaires.</p>
-                <div id="commentaires">
-                    <ul>
-                    @foreach ($commentaires as $commentaire)
-                        <li>
-                            <p>{{ $commentaire->contenu }}</p>
-                            <!-- Assurez-vous d'ajouter 'auteur' à votre modèle Commentaire si vous souhaitez l'afficher -->
-                            <!-- <p>{{ $commentaire->auteur }}</p> -->
-                            <p>{{ $commentaire->date_creation }}</p> <!-- Assurez-vous que 'date_creation' est le bon nom d'attribut pour votre modèle Commentaire -->
-                            <button class="bg-red-500">Supprimer</button>
-                        </li>
-                    @endforeach
-                    </ul>
+            <div id="section-3" class="hidden w-screen flex-col  ">
+                <h1 class="text-2xl font-bold mb-4 p-4">Gestion des commentaires</h1>
+                <div class="flex items-center">
+                    <input type="text" id="searchBar" class="border border-gray-300 rounded-lg p-2 w-1/4 m-2"
+                        placeholder="Search...">
+                    <button id="searchButton"
+                        class="bg-purple-500 text-white p-2 rounded-lg hover:bg-purple-600 transition duration-300">
+                        <img src="{{ asset('assets/search.svg') }}" class="w-5 h-5">
+                    </button>
+                </div>
+                <div id="commentaires" class="mt-4 items-center">
+                    <div class="grid grid-cols-4 gap-4 p-4">
+                        @foreach ($commentaires as $commentaire)
+                        <div class="bg-gray-300 p-5 rounded-lg">
+                            <div class="comment-box bg-white rounded-lg p-4">
+                                <p>{{ $commentaire->contenu }}</p>
+                            </div>
+                            <div class="flex justify-between items-end mt-2">
+                                <p class="p-2">date : {{ $commentaire->date_creation }}</p>
+                                <form action="{{ route('comments.destroy', $commentaire->idCommentaire) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-white px-4 py-2 rounded-lg hover:bg-purple-500 transition duration-300">
+                                        <img src="{{ asset('assets/trash.svg') }}" class="w-5">
+                                    </button>
+                                </form>
+
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
 

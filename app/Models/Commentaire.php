@@ -20,4 +20,5 @@ class Commentaire extends Model
     {
         return $this->belongsTo(Page::class, 'idPage', 'idPage');
     }
+
 }

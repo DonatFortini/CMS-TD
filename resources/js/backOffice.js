@@ -34,7 +34,7 @@ function findActiveFeature() {
     return document.querySelector('.active');
 }
 
-// drag and drop blocks
+// drag and drop blocks section 2
 
 const listItems = document.querySelectorAll('#listeBlocks li');
 const playground = document.querySelector('#playground');
@@ -63,3 +63,34 @@ playground.addEventListener('drop', function (event) {
 function create(itemId) {
     console.log(itemId);
 }
+
+////// section 3
+
+
+const comments = document.querySelectorAll('.comment-box p');
+const bannedWords = ['enculé', 'batard', 'fils de pute', 'connard', 'salope', 'pute', 'merde', 'nique ta mère', 'nique ta mere'];
+
+comments.forEach(comment => {
+    bannedWords.forEach(word => {
+        const regex = new RegExp(`\\b${word}\\b`, 'gi');
+        if (regex.test(comment.textContent)) {
+            const replacedText = comment.textContent.replace(regex, `<span class="bg-red-500">${word}</span>`);
+            comment.innerHTML = replacedText;
+        }
+    });
+});
+
+const searchBar = document.querySelector('#searchBar');
+const searchButton = document.querySelector('#searchButton');
+
+searchButton.addEventListener('click', function () {
+    const searchValue = searchBar.value.trim().toLowerCase();
+    comments.forEach(comment => {
+        const commentText = comment.textContent.toLowerCase();
+        if (commentText.includes(searchValue)) {
+            comment.parentElement.parentElement.classList.remove('hidden');
+        } else {
+            comment.parentElement.parentElement.classList.add('hidden');
+        }
+    });
+});
