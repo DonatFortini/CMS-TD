@@ -39,24 +39,26 @@
 
 
     <div id="content" class="flex " style="height:90vh;">
-        <section class="w-1/6 bg-gray-200">
-            <h1>Fonctionnalités</h1>
-            <ul style="list-style-type: none; padding: 0;">
-                <li id="stats" class="hover:bg-gray-500 active"><a>Statistiques du site</a></li>
-                <li id="create" class="hover:bg-gray-500"><a>Création de contenu</a></li>
-                <li id="comments" class="hover:bg-gray-500"><a>Gestion des commentaires</a></li>
-                <li id="pages" class="hover:bg-gray-500"><a>Mes pages</a></li>
+        <section class="w-1/6 bg-gray-400 rounded-lg p-6 shadow-md">
+            <h1 class="text-3xl font-extrabold text-purple-700 mb-6">Fonctionnalités</h1>
+            <ul class="space-y-4">
+                <li id="create" class=" hover:bg-purple-500 hover:text-white rounded-lg transition duration-300 ">
+                    <a
+                        class="active block py-3 px-6 text-purple-700  hover:bg-purple-600 hover:text-white rounded-lg transition duration-300 ">Création
+                        de contenu</a>
+                </li>
+                <li id="comments" class="hover:bg-purple-500 hover:text-white rounded-lg transition duration-300">
+                    <a
+                        class="block py-3 px-6 text-purple-700  hover:bg-purple-600 hover:text-white rounded-lg transition duration-300">Gestion
+                        des commentaires</a>
+                </li>
             </ul>
         </section>
 
+
         <main class="w-5/6  flex">
 
-            <div id="section-1" class="flex-col bg-slate-500 w-screen">
-                <h1>Tableau de Bord</h1>
-                <p>Visualisez vos statistiques.</p>
-            </div>
-
-            <div id="section-2" class="w-screen hidden">
+            <div id="section-1" class="w-screen flex">
                 <section class="w-1/5">
                     <ul id="liste_page">
                         @foreach ($pages as $page)
@@ -74,15 +76,15 @@
                     <ul id="listeBlocks">
                         <li><a id="texte" class="cursor-grab">Zone de texte</a></li>
                         <li><a id="image" class="cursor-grab">Image</a></li>
-                        <li><a id="video" class="cursor-grab">Vidéo</a></li>
-                        <li><a id="audio" class="cursor-grab">Audio</a></li>
+                        <li><a id="titre" class="cursor-grab">Titre</a></li>
+                        <li><a id="stitre" class="cursor-grab">Sous-titre</a></li>
                         <li><a id="formulaire" class="cursor-grab">Formulaire</a></li>
                         <li><a id="contact" class="cursor-grab">Contact</a></li>
                     </ul>
                 </section>
             </div>
 
-            <div id="section-3" class="hidden w-screen flex-col  ">
+            <div id="section-2" class="hidden w-screen flex-col  ">
                 <h1 class="text-2xl font-bold mb-4 p-4">Gestion des commentaires</h1>
                 <div class="flex items-center">
                     <input type="text" id="searchBar" class="border border-gray-300 rounded-lg p-2 w-1/4 m-2"
@@ -116,12 +118,6 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
-
-            <div id="section-4" class="hidden w-screen">
-                <h1>Mes pages</h1>
-                <p>Visualisez et modifiez vos pages.</p>
-                <div id="pages"></div>
             </div>
 
         </main>
