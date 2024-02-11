@@ -3,6 +3,6 @@
 @import 'tailwindcss/utilities';
 
 .active {
-    background-color: #007BFF;
+    background-color: #adb3bc;
     color: #fff;
 }

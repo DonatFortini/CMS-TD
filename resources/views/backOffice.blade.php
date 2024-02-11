@@ -42,14 +42,14 @@
         <section class="w-1/6 bg-gray-400 rounded-lg p-6 shadow-md">
             <h1 class="text-3xl font-extrabold text-purple-700 mb-6">Fonctionnalités</h1>
             <ul class="space-y-4">
-                <li id="create" class="hover:bg-purple-500 hover:text-white rounded-lg transition duration-300 ">
+                <li id="create" class=" hover:bg-purple-500 hover:text-white rounded-lg transition duration-300 ">
                     <a
-                        class="block py-3 px-6 text-purple-700 bg-purple-100 hover:bg-purple-600 hover:text-white rounded-lg transition duration-300 active">Création
+                        class="active block py-3 px-6 text-purple-700  hover:bg-purple-600 hover:text-white rounded-lg transition duration-300 ">Création
                         de contenu</a>
                 </li>
                 <li id="comments" class="hover:bg-purple-500 hover:text-white rounded-lg transition duration-300">
                     <a
-                        class="block py-3 px-6 text-purple-700 bg-purple-100 hover:bg-purple-600 hover:text-white rounded-lg transition duration-300">Gestion
+                        class="block py-3 px-6 text-purple-700  hover:bg-purple-600 hover:text-white rounded-lg transition duration-300">Gestion
                         des commentaires</a>
                 </li>
             </ul>
