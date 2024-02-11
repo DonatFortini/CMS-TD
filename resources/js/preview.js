@@ -1,7 +1,10 @@
-const navbarSelector = document.getElementById('navbar-select');
-const mainSelector = document.getElementById('main-select');
-const footerSelector = document.getElementById('footer-select');
-const colorPicker = document.getElementById('color-picker');
+const navbarSelector = document.querySelector('#navbar-select');
+const mainSelector = document.querySelector('#main-select');
+const footerSelector = document.querySelector('#footer-select');
+const colorPicker = document.querySelector('#color-picker');
+const fontSelector = document.querySelector('#font-select');
+const fontColorPicker = document.querySelector('#font-color-picker');
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const url = new URL(window.location.href);
@@ -41,7 +44,9 @@ colorPicker.addEventListener('input', () => {
     const chromaValue = darkenColor(selectedValue, 20);
     const chromaValue2 = darkenColor(selectedValue, 30);
     navMain.style.backgroundColor = chromaValue;
+    navMain.querySelector('#nav-content').style.backgroundColor = chromaValue;
     footer.style.backgroundColor = chromaValue2;
+
 
 
     const textColor = getReadableTextColor(selectedValue);
@@ -55,6 +60,18 @@ colorPicker.addEventListener('input', () => {
         }
     });
 
+});
+
+fontSelector.addEventListener('change', () => {
+    const selectedValue = fontSelector.value;
+    const main = document.querySelector('#playground main');
+    main.style.fontFamily = selectedValue;
+});
+
+fontColorPicker.addEventListener('input', () => {
+    const selectedValue = fontColorPicker.value;
+    const main = document.querySelector('#playground main');
+    main.style.color = selectedValue;
 });
 
 function darkenColor(color, amount) {

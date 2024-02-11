@@ -73,6 +73,26 @@
                                             <label for="color-picker" class="mr-2">Main Color:</label>
                                             <input type="color" name="color" id="color-picker" class="p-1 rounded-full">
                                         </div>
+
+                                        <div class="flex items-center mb-2 md:mb-0">
+                                            <label for="font-select" class="mr-2">Font:</label>
+                                            <select id="font-select" name="font" class="p-1 border border-gray-300 rounded">
+                                                <!-- Options pour la police d'écriture -->
+                                                <?php
+                                                    $fontOptions = ['Arial', 'Helvetica', 'Verdana', 'Georgia', 'Times New Roman', 'Trebuchet MS', 'Arial Black', 'Impact', 'Comic Sans MS', 'Courier New', 'Lucida Console'];
+                                                    $selectedFont = $_GET["font"] ?? '';
+                                                    foreach ($fontOptions as $option) {
+                                                        $selected = $selectedFont === $option ? 'selected' : '';
+                                                        echo "<option value=\"$option\" $selected>$option</option>";
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex items-center mb-2 md:mb-0">
+                                            <label for="text-color-picker" class="mr-2">Text Color:</label>
+                                            <input type="color" name="text_color" id="font-color-picker" class="p-1 rounded-full">
+                                        </div>
                                     </div>
                                 </div>
                                 <button type="submit" class="md:ml-4 p-2 w-full md:w-auto bg-blue-500 text-white rounded shadow-lg">Créer</button>
