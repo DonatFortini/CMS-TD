@@ -3,6 +3,13 @@ const mainSelector = document.getElementById('main-select');
 const footerSelector = document.getElementById('footer-select');
 const colorPicker = document.getElementById('color-picker');
 
+document.addEventListener('DOMContentLoaded', () => {
+    const url = new URL(window.location.href);
+    const navbar = url.searchParams.get('navbar');
+    document.querySelector('#orientation').classList = (navbar === "vertical") ? "flex" : "flex-col";
+});
+
+
 navbarSelector.addEventListener('change', () => {
     const selectedValue = navbarSelector.value;
     const url = new URL(window.location.href);
@@ -32,8 +39,9 @@ colorPicker.addEventListener('input', () => {
 
     main.style.backgroundColor = selectedValue;
     const chromaValue = darkenColor(selectedValue, 20);
+    const chromaValue2 = darkenColor(selectedValue, 30);
     navMain.style.backgroundColor = chromaValue;
-    footer.style.backgroundColor = chromaValue;
+    footer.style.backgroundColor = chromaValue2;
 
 
     const textColor = getReadableTextColor(selectedValue);

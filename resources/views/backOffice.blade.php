@@ -50,13 +50,8 @@
         </section>
 
         <main class="w-5/6  flex">
-
-            <div id="section-1" class="flex-col bg-slate-500 w-screen">
-                <h1>Tableau de Bord</h1>
-                <p>Visualisez vos statistiques.</p>
-            </div>
-
-            <div id="section-2" class="w-screen hidden">
+            <!-- section-1 -->
+            <div id="section-1" class="w-screen hidden">
                 <section class="w-1/5">
                     <ul id="liste_page">
                         @foreach ($pages as $page)
@@ -82,7 +77,8 @@
                 </section>
             </div>
 
-            <div id="section-3" class="hidden w-screen flex-col  ">
+            <!-- section-2 -->
+            <div id="section-2" class="hidden w-screen flex-col  ">
                 <h1 class="text-2xl font-bold mb-4 p-4">Gestion des commentaires</h1>
                 <div class="flex items-center">
                     <input type="text" id="searchBar" class="border border-gray-300 rounded-lg p-2 w-1/4 m-2"
@@ -116,12 +112,6 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
-
-            <div id="section-4" class="hidden w-screen">
-                <h1>Mes pages</h1>
-                <p>Visualisez et modifiez vos pages.</p>
-                <div id="pages"></div>
             </div>
 
         </main>

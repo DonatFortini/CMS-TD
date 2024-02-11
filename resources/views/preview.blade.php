@@ -2,8 +2,8 @@
 
 @if($_GET["navbar"] == "burger")
 @include('templates.navbar.burger')
-@elseif($_GET["navbar"] == "modern")
-@include('templates.navbar.modern')
+@elseif($_GET["navbar"] == "vertical")
+@include('templates.navbar.vertical')
 @elseif($_GET["navbar"] == "classic")
 @include('templates.navbar.classic')
 @else

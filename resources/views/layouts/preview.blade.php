@@ -32,7 +32,7 @@
                                             <select id="navbar-select" name="navbar_template" class="p-1 border border-gray-300 rounded">
                                                 <!-- Options pour la barre de navigation -->
                                                 <?php
-                                                    $navbarOptions = ['burger', 'classic', 'modern'];
+                                                    $navbarOptions = ['burger', 'classic', 'vertical'];
                                                     $selectedNavbar = $_GET["navbar"] ?? '';
                                                     foreach ($navbarOptions as $option) {
                                                         $selected = $selectedNavbar === $option ? 'selected' : '';
@@ -86,8 +86,12 @@
 
     <div class="bg-slate-500 w-full flex justify-center items-center" style="min-height:90vh;">
         <div id="playground" class="bg-slate-200 w-full md:w-4/5 xl:w-3/4 2xl:w-2/3 max-h-95% overflow-auto p-4">
-            @yield('navbar')
-            @yield('content')
+            <div id="orientation" class="flex">
+                @yield('navbar')
+                <div id="topSeparator"></div>
+                @yield('content')
+            </div>
+            <div id="bottomSeparator"></div>
             @yield('footer')
         </div>
     </div>
