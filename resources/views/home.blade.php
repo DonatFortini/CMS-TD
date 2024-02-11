@@ -13,7 +13,6 @@
     </div>
 </div>
 
-<!-- Content Section 1 -->
 <div id="section-1" class="section-1 min-h-screen flex items-center">
     <div class="container mx-auto text-center">
         <div class="flex items-center justify-center">
@@ -46,7 +45,6 @@
     </div>
 </div>
 
-<!-- Content Section 2 -->
 <div id="section-2" class="section-2 min-h-screen flex items-center">
     <div class="container mx-auto text-center">
         <h1 class="text-6xl font-bold content-title">Suivez l'évolution de votre blog en direct</h1>

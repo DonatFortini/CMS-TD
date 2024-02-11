@@ -12,19 +12,14 @@ Route::get('/contact', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', 'App\Http\Controllers\DashBoardController@index')->name('dashboard');
 
+    Route::get('/preview', 'App\Http\Controllers\PreviewController@preview')->name('preview');
+
     Route::get('/create-site', function () {
         $navbar = 'burger';
         $main = 'complex';
         $footer = 'complex';
         return redirect("/preview?navbar=$navbar&main=$main&footer=$footer");
     })->name('createSite');
-
-    Route::get(
-        '/preview',
-        function () {
-            return view('preview');
-        }
-    )->name('preview');
 
     Route::get('/backOffice/{dns}', 'App\Http\Controllers\BackOfficeController@index')
         ->name('backOffice')
@@ -51,3 +46,5 @@ Route::middleware(['guest'])->group(function () {
 Route::get('/', function () {
     return view('home');
 })->name('home');
+
+Route::get('/{dns}', 'App\Http\Controllers\SiteViewController@showSite')->where('dns', '.*')->name('showSite');

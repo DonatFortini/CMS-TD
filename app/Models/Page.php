@@ -13,7 +13,8 @@ class Page extends Model
 
     protected $fillable = [
         'dns',
-        'idSite'
+        'idSite',
+        'nom'
     ];
 
     public function site()

@@ -2,33 +2,32 @@
 <main class="container mx-auto px-4 py-8">
     <article class="max-w-3xl mx-auto">
         <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold mb-2">Title of the Blog Article</h1>
-            <p class="text-gray-600">Published on February 9, 2024</p>
+            <h1 class="text-4xl font-bold mb-2">{{ $site->nom ?? 'Title of the Blog Article' }}</h1>
+            <p class="text-gray-600">Published by {{ $site->auteur ?? 'Author Name' }}</p>
         </header>
         <div class="prose lg:prose-xl">
-            <img src="https://via.placeholder.com/800x400" alt="Image" class="mb-6 rounded-lg shadow-lg">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Nulla facilisi. Curabitur auctor, nulla vel luctus tristique, leo velit tristique risus, non fermentum lorem neque ac justo.</p>
-            <p>Phasellus nec enim nisi. Fusce finibus tempor nulla, sit amet tincidunt nisi fringilla nec. Vivamus ullamcorper, urna eget fringilla feugiat, lacus sapien scelerisque magna, eu vestibulum sapien nunc non nisi. Quisque eu sagittis nulla.</p>
-            <blockquote class="border-l-4 border-gray-500 italic pl-4 my-6">"Suspendisse potenti. Integer lacinia fringilla ligula, id venenatis dui lacinia id."</blockquote>
-            <p>Donec et tortor vel felis efficitur vestibulum. Nam commodo mi id elit ullamcorper, in aliquet sapien faucibus. Nam in enim a ipsum commodo auctor.</p>
-            <p>Quisque nec felis quis dui lobortis fermentum a id libero. Nulla eu ipsum nec magna viverra ullamcorper sit amet ut justo.</p>
+            <img src="{{ $site->pathImage ?? 'https://via.placeholder.com/800x400' }}" alt="Image" class="mb-6 rounded-lg shadow-lg">
+            <p>{{ $site->description1 ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...' }}</p>
+            <blockquote class="border-l-4 border-gray-500 italic pl-4 my-6">"{{ $site->description2 ?? 'Suspendisse potenti...' }}"</blockquote>
+            <p>Donec et tortor vel felis efficitur vestibulum...</p>
+            <p>Quisque nec felis quis dui lobortis fermentum...</p>
             <div class="mt-8">
-                <h2 class="text-2xl font-semibold mb-4">Author</h2>
+                <h2 class="text-2xl font-semibold mb-4">About the Author</h2>
                 <div class="flex items-center mb-4">
-                    <img src="https://via.placeholder.com/50" alt="Author Avatar" class="w-10 h-10 rounded-full mr-4">
+                    <img src="{{ $site->pathImage ?? 'https://via.placeholder.com/50' }}" alt="Author Avatar" class="w-10 h-10 rounded-full mr-4">
                     <div>
-                        <p class="text-lg font-semibold">John Doe</p>
-                        <p class="text-sm text-gray-600">Writer &amp; Blogger</p>
+                        <p class="text-lg font-semibold">{{ $site->auteur ?? 'John Doe' }}</p>
+                        <p class="text-sm text-gray-600">Writer & Blogger</p>
                     </div>
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Nulla facilisi. Curabitur auctor, nulla vel luctus tristique, leo velit tristique risus, non fermentum lorem neque ac justo.</p>
+                <p>{{ $site->description2 ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...' }}</p>
             </div>
             <div class="mt-8">
                 <h2 class="text-2xl font-semibold mb-4">Related Articles</h2>
                 <ul>
-                    <li><a href="#" class="text-blue-600 hover:underline">Article 1</a></li>
-                    <li><a href="#" class="text-blue-600 hover:underline">Article 2</a></li>
-                    <li><a href="#" class="text-blue-600 hover:underline">Article 3</a></li>
+                    @foreach($pages as $page)
+                        <li><a href="{{ url($page->dns) }}" class="text-blue-600 hover:underline">{{ $page->nom }}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="mt-8">
@@ -42,5 +41,4 @@
         </div>
     </article>
 </main>
-
 @endsection

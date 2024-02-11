@@ -8,10 +8,9 @@ class Site extends Model
 {
     protected $table = 'site';
     protected $primaryKey = 'idSite';
-    public $incrementing = true;
 
     protected $fillable = [
-        'nom', 'dns', 'idUtilisateur', 'pathNavbar', 'pathFooter', 'pathBody', 'couleur'
+        'nom', 'dns', 'idUtilisateur', 'pathNavbar', 'pathFooter', 'pathBody', 'couleur', 'pathImage', 'auteur', 'description1', 'description2'
     ];
 
     public $timestamps = false;
