@@ -10,9 +10,6 @@
     --dark:#252525;
 }
 
-/* custom style */
-
-
 .navbar {
     background-color: var(--dark);
     color: var(--violet-light);

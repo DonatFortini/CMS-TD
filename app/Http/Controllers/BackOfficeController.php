@@ -56,8 +56,7 @@ class BackOfficeController extends Controller
         if (!$site) {
             abort(404, 'Site not found');
         }
-    
-        // Récupérez les objets Page complets au lieu des ID
+
         $pages = Page::where('idSite', $site->idSite)->get();
     
         $commentaires = Commentaire::whereIn('idPage', $pages->pluck('idPage'))->get();

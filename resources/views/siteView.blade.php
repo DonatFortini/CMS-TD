@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $site->nom }}</title>
     @vite('resources/css/app.css')
-    @vite('resources/css/siteView.css')
 </head>
 <body style="background-color: {{ $site->couleurBackground }}; color: {{ $site->couleurPolicy }}; font-family: {{ $site->fontPolicy }}; ">
     <div name="orientation" class="{{ $orientation }}">

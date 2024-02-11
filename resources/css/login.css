@@ -2,9 +2,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* Ajoutez vos styles personnalisés ici */
-
-/* Styles spécifiques à la page de connexion */
 .card {
     width: 100%;
     max-width: 400px;
@@ -46,4 +43,3 @@
     text-decoration: underline;
 }
 
-/* Réorganisez et personnalisez les styles Tailwind en fonction de vos besoins */

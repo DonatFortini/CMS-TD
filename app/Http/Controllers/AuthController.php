@@ -40,7 +40,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // Valider les données reçues du formulaire d'inscription
         $validatedData = $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
@@ -48,16 +47,13 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
     
-        // Créer un nouvel utilisateur
         $utilisateur = Utilisateur::create([
             'nom' => $validatedData['nom'],
             'prenom' => $validatedData['prenom'],
             'email' => $validatedData['email'],
-            // Assurez-vous de hasher le mot de passe avant de le stocker dans la base de données
             'mdp' => Hash::make($validatedData['password']),
         ]);
     
-        // Authentifier l'utilisateur après l'inscription réussie
         Auth::login($utilisateur);
     
         

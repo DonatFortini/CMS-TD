@@ -30,7 +30,7 @@
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="navbar-select" class="mr-2">Navbar Template:</label>
                                             <select id="navbar-select" name="navbar_template" class="p-1 border border-gray-300 rounded">
-                                                <!-- Options pour la barre de navigation -->
+                                    
                                                 <?php
                                                     $navbarOptions = ['burger', 'classic', 'vertical'];
                                                     $selectedNavbar = $_GET["navbar"] ?? '';
@@ -44,7 +44,7 @@
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="main-select" class="mr-2">Main Template:</label>
                                             <select id="main-select" name="main_template" class="p-1 border border-gray-300 rounded">
-                                                <!-- Options pour le template principal -->
+                                            
                                                 <?php
                                                     $mainOptions = ['complex', 'modern', 'simple'];
                                                     $selectedMain = $_GET["main"] ?? '';
@@ -58,7 +58,7 @@
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="footer-select" class="mr-2">Footer Template:</label>
                                             <select id="footer-select" name="footer_template" class="p-1 border border-gray-300 rounded">
-                                                <!-- Options pour le template de pied de page -->
+                                                
                                                 <?php
                                                     $footerOptions = ['complex', 'modern', 'simple'];
                                                     $selectedFooter = $_GET["footer"] ?? '';
@@ -77,7 +77,7 @@
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="font-select" class="mr-2">Font:</label>
                                             <select id="font-select" name="font-policy" class="p-1 border border-gray-300 rounded">
-                                                <!-- Options pour la police d'écriture -->
+                                             
                                                 <?php
                                                     $fontOptions = ['Arial', 'Helvetica', 'Verdana', 'Georgia', 'Times New Roman', 'Trebuchet MS', 'Arial Black', 'Impact', 'Comic Sans MS', 'Courier New', 'Lucida Console'];
                                                     $selectedFont = $_GET["font"] ?? '';
