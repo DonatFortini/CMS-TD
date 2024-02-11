@@ -1,10 +1,8 @@
 // display pages
 
 const features = [
-    { button: document.querySelector('#stats'), sectionIndex: 0 },
-    { button: document.querySelector('#create'), sectionIndex: 1 },
-    { button: document.querySelector('#comments'), sectionIndex: 2 },
-    { button: document.querySelector('#pages'), sectionIndex: 3 }
+    { button: document.querySelector('#create'), sectionIndex: 0 },
+    { button: document.querySelector('#comments'), sectionIndex: 1 },
 ];
 
 const sections = document.querySelectorAll('[id^="section-"]');
