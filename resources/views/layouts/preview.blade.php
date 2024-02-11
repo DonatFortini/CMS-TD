@@ -76,7 +76,7 @@
 
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="font-select" class="mr-2">Font:</label>
-                                            <select id="font-select" name="font" class="p-1 border border-gray-300 rounded">
+                                            <select id="font-select" name="font-policy" class="p-1 border border-gray-300 rounded">
                                                 <!-- Options pour la police d'écriture -->
                                                 <?php
                                                     $fontOptions = ['Arial', 'Helvetica', 'Verdana', 'Georgia', 'Times New Roman', 'Trebuchet MS', 'Arial Black', 'Impact', 'Comic Sans MS', 'Courier New', 'Lucida Console'];
@@ -91,7 +91,7 @@
 
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="text-color-picker" class="mr-2">Text Color:</label>
-                                            <input type="color" name="text_color" id="font-color-picker" class="p-1 rounded-full">
+                                            <input type="color" name="font-color" id="font-color-picker" class="p-1 rounded-full">
                                         </div>
                                     </div>
                                 </div>

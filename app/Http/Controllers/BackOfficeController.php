@@ -23,6 +23,8 @@ class BackOfficeController extends Controller
             'main_template' => 'required|string|max:255',
             'footer_template' => 'required|string|max:255',
             'color' => 'required|string|max:255',
+            'font-color' => 'required|string|max:255',
+            'font-policy' => 'required|string|max:255',
         ]);
     
         $dns = sprintf("%s.%s",  Auth::user()->email, $validatedData['site_name']);
@@ -34,7 +36,9 @@ class BackOfficeController extends Controller
             'pathNavbar' => $validatedData['navbar_template'],
             'pathFooter' => $validatedData['footer_template'],
             'pathBody' => $validatedData['main_template'],
-            'couleur' => $validatedData['color'],
+            'couleurBackground' => $validatedData['color'],
+            'couleurPolicy' => $validatedData['font-color'],
+            'fontPolicy' => $validatedData['font-policy'],
         ]);
     
         if ($site) {

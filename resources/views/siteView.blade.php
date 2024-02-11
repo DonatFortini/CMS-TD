@@ -5,21 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $site->nom }}</title>
     @vite('resources/css/app.css')
+    @vite('resources/css/siteView.css')
 </head>
-<body style="background-color: {{ $site->couleur }};">
-    <header>
+<body style="background-color: {{ $site->couleurBackground }}; color: {{ $site->couleurPolicy }}; font-family: {{ $site->fontPolicy }}; ">
+    <div name="orientation" class="{{ $orientation }}">
         @include('templates.navbar.' . $site->pathNavbar)
         @yield('navbar')
-    </header>
-
-    <main>
         @include('templates.main.' . $site->pathBody)
-        @yield('content')
-    </main>
-
-    <footer>
-        @include('templates.footer.' . $site->pathFooter)
-        @yield('footer')
-    </footer>
+        @yield('content') 
+    </div>
+    @include('templates.footer.' . $site->pathFooter)
+    @yield('footer')
 </body>
 </html>

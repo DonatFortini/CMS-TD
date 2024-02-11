@@ -10,7 +10,7 @@ class Site extends Model
     protected $primaryKey = 'idSite';
 
     protected $fillable = [
-        'nom', 'dns', 'idUtilisateur', 'pathNavbar', 'pathFooter', 'pathBody', 'couleur', 'pathImage', 'auteur', 'description1', 'description2'
+        'nom', 'dns', 'idUtilisateur', 'pathNavbar', 'pathFooter', 'pathBody', 'couleurBackground', 'couleurPolicy', 'fontPolicy', 'pathImage', 'auteur', 'description1', 'description2'
     ];
 
     public $timestamps = false;

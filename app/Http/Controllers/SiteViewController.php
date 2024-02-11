@@ -13,10 +13,12 @@ class SiteViewController extends Controller
         $site = Site::where('dns', $dns)->firstOrFail();
         $pages = Page::where('idSite', $site->idSite)->get();
         $pages = collect(json_decode($pages));
+        $orientation = $site->pathNavbar == "vertical" ? "flex" : "flex-col";
         
         return view('siteView', [
             'site' => $site,
-            'pages' => $pages
+            'pages' => $pages,
+            'orientation' => $orientation,
         ]);
     }
 }
