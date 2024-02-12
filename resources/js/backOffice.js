@@ -36,6 +36,15 @@ function findActiveFeature() {
 
 const listItems = document.querySelectorAll('#listeBlocks li');
 const playground = document.querySelector('#playground');
+const pages=document.querySelectorAll('[id^="page_"]');
+
+pages.forEach(page=>{
+    page.addEventListener('click',()=>{
+        const url= new URL(window.location.href);
+        url.searchParams.set('page',page.id);
+        window.location.href=url.toString();
+    });
+});
 
 listItems.forEach(item => {
     item.setAttribute('draggable', true);

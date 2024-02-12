@@ -62,14 +62,21 @@
                 <section class="w-1/5">
                     <ul id="liste_page">
                         @foreach ($pages as $page)
-                        <li>{{ $page->dns }}</li>
+                        <li id=<?php echo "page_$page->idPage" ?> class=
+                            <?php echo ($_GET['page']==="page_$page->idPage")? "bg-slate-500":""; ?> >{{ $page->dns }}
+                        </li>
                         @endforeach
                     </ul>
                 </section>
 
                 <main id="page-constructor" class="w-3/5 bg-gray-200">
                     <h1 class="font-bold text-center">Contenu de la page</h1>
-                    <div id="playground"></div>
+                    <div id="playground">
+                        <?php $count=0;?>
+                        
+                        <div id="element<?php echo $count++?>"></div>
+                       
+                    </div>
                 </main>
 
                 <section id="blockSection" class="bg-slate-100 w-1/5">
