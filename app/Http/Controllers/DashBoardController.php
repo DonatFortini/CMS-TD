@@ -14,11 +14,9 @@ class DashBoardController extends Controller
 
     public function index()
     {
-        // Récupérez les sites de l'utilisateur actuellement authentifié
-        // Remplacez 'user_id' par la clé étrangère appropriée dans votre table de sites, si différente
+        
         $sites = Site::where('idUtilisateur', auth()->id())->get();
 
-        // Passez les sites à la vue
         return view('dashboard', compact('sites'));
     }
     
