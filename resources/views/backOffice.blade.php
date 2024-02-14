@@ -62,43 +62,60 @@
                 <section class="w-1/5">
                     <ul id="liste_page">
                         @foreach ($pages as $page)
-                            <li id="page_{{ $page->idPage }}" class="page-item cursor-pointer">{{ $page->nom }}</li>
+                        <li id="page_{{ $page->idPage }}" class="page-item cursor-pointer">{{ $page->nom }}</li>
                         @endforeach
                     </ul>
                 </section>
 
-                <main id="page-constructor" class="w-3/5 bg-gray-200">
+                <main id="page-constructor" class="w-3/5 bg-gray-200 overflow-scroll">
                     <h1 class="font-bold text-center">Contenu de la page</h1>
-                    <div id="playground">
-                    @php
-                        $currentPageId = explode('_', request('page'))[1] ?? null;
-                    @endphp
-                    @foreach ($pages as $page)
-                        @if ($page->idPage == $currentPageId) 
+                    <div id="playground" class="h-full">
+                        <ol id="disposition_page">
+                            @php
+                            $currentPageId = explode('_', request('page'))[1] ?? null;
+                            $order = 1;
+                            @endphp
+                            @foreach ($pages as $page)
+                            @if ($page->idPage == $currentPageId)
                             @foreach ($page->blocs as $bloc)
-                                @php
-                                    $type = strtolower($bloc->type);
-                                @endphp
-                                @if(view()->exists("templates.utils.$type"))
-                                    @include("templates.utils.$type", ['bloc' => $bloc])
-                                    @yield($type)
-                                @else
-                                    <p>Le template pour le type de bloc '{{ $type }}' n'existe pas.</p>
-                                @endif
+                            @php
+                            $type = strtolower($bloc->type);
+                            @endphp
+                            @if(view()->exists("templates.utils.$type"))
+                            @include("templates.utils.$type", ['bloc' => $bloc])
+                            <li id="bloc_{{ $order }}"
+                                class="flex-col bg-slate-300 border-2 border-black m-5 rounded-3xl cursor-grab"
+                                data-id="{{ $bloc->idBloc }}" style="min-height: 75px;">
+                                <div class="flex justify-between p-2">
+                                    <button
+                                        class="bg-slate-400 rounded-3xl hover:bg-red-500 hover:text-white transition duration-400 inline-block">
+                                        <img src="{{ asset('assets/trash.svg') }}" class="w-7 h-7">
+                                    </button>
+                                    <label for="name" class="bg-slate-400 inline-block">Type {{$bloc->type}}</label>
+                                </div>
+                                @yield($type)
+                            </li>
+                            @php
+                            $order++;
+                            @endphp
+                            @else
+                            <p>Le template pour le type de bloc '{{ $type }}' n'existe pas.</p>
+                            @endif
                             @endforeach
-                        @endif
-                    @endforeach
+                            @endif
+                            @endforeach
+                        </ol>
                     </div>
                 </main>
 
                 <section id="blockSection" class="bg-slate-100 w-1/5">
                     <ul id="listeBlocks">
-                        <li><a id="texte" class="cursor-grab">Zone de texte</a></li>
-                        <li><a id="image" class="cursor-grab">Image</a></li>
-                        <li><a id="titre" class="cursor-grab">Titre</a></li>
-                        <li><a id="stitre" class="cursor-grab">Sous-titre</a></li>
-                        <li><a id="formulaire" class="cursor-grab">Formulaire</a></li>
-                        <li><a id="contact" class="cursor-grab">Contact</a></li>
+                        <li id="texte" class="cursor-grab">Zone de texte</li>
+                        <li id="image" class="cursor-grab">Image</li>
+                        <li id="titre" class="cursor-grab">Titre</li>
+                        <li id="stitre" class="cursor-grab">Sous-titre</li>
+                        <li id="formulaire" class="cursor-grab">Formulaire</li>
+                        <li id="contact" class="cursor-grab">Contact</li>
                     </ul>
                 </section>
             </div>
@@ -149,12 +166,12 @@
             const pageId = urlParams.get('page');
 
             pageItems.forEach(item => {
-                item.addEventListener('click', function(event) {
+                item.addEventListener('click', function (event) {
                     event.preventDefault();
                     window.history.pushState({}, '', '?page=' + this.id.replace('page_', ''));
                     highlightSelectedItem(this);
                 });
-                
+
                 if (item.id === pageId) {
                     highlightSelectedItem(item);
                 }
