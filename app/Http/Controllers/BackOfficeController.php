@@ -57,13 +57,9 @@ class BackOfficeController extends Controller
     
     public function index($siteDns)
     {
-        $site = Site::where('dns', $siteDns)->first();
+        $site = Site::where('dns', $siteDns)->firstOrFail();
     
-        if (!$site) {
-            abort(404, 'Site not found');
-        }
-
-        $pages = Page::where('idSite', $site->idSite)->get();
+        $pages = Page::where('idSite', $site->idSite)->with('blocs')->get();
     
         $commentaires = Commentaire::whereIn('idPage', $pages->pluck('idPage'))->get();
     

@@ -62,9 +62,7 @@
                 <section class="w-1/5">
                     <ul id="liste_page">
                         @foreach ($pages as $page)
-                        <li id=<?php echo "page_$page->idPage" ?> class=
-                            <?php echo ($_GET['page']==="page_$page->idPage")? "bg-slate-500":""; ?> >{{ $page->dns }}
-                        </li>
+                            <li id="page_{{ $page->idPage }}" class="page-item cursor-pointer">{{ $page->nom }}</li>
                         @endforeach
                     </ul>
                 </section>
@@ -72,10 +70,25 @@
                 <main id="page-constructor" class="w-3/5 bg-gray-200">
                     <h1 class="font-bold text-center">Contenu de la page</h1>
                     <div id="playground">
-                        <?php $count=0;?>
-                        
-                        <div id="element<?php echo $count++?>"></div>
-                       
+                    @php
+                        $currentPageId = explode('_', request('page'))[1] ?? null;
+                    @endphp
+                    @foreach ($pages as $page)
+                        @if ($page->idPage == $currentPageId) 
+                            @foreach ($page->blocs as $bloc)
+                                @php
+                                    $type = strtolower($bloc->type);
+                                @endphp
+                                @if(view()->exists("templates.utils.$type"))
+                                    <p>{{ $type }}</p>
+                                    @include("templates.utils.$type", ['bloc' => $bloc])
+                                    @yield($type)
+                                @else
+                                    <p>Le template pour le type de bloc '{{ $type }}' n'existe pas.</p>
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
                     </div>
                 </main>
 
@@ -130,6 +143,30 @@
         </main>
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pageItems = document.querySelectorAll('#liste_page li');
+            const urlParams = new URLSearchParams(window.location.search);
+            const pageId = urlParams.get('page');
+
+            pageItems.forEach(item => {
+                item.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    window.history.pushState({}, '', '?page=' + this.id.replace('page_', ''));
+                    highlightSelectedItem(this);
+                });
+                
+                if (item.id === pageId) {
+                    highlightSelectedItem(item);
+                }
+            });
+
+            function highlightSelectedItem(item) {
+                pageItems.forEach(it => it.classList.remove('bg-purple-500', 'text-white'));
+                item.classList.add('bg-purple-500', 'text-white');
+            }
+        });
+    </script>
 
 </body>
 

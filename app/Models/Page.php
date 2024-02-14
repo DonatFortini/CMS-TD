@@ -21,4 +21,9 @@ class Page extends Model
     {
         return $this->belongsTo(Site::class, 'idSite', 'idSite');
     }
+
+    public function blocs()
+    {
+        return $this->hasMany(Bloc::class, 'idPage', 'idPage');
+    }
 }
