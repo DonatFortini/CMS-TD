@@ -59,7 +59,10 @@ class BackOfficeController extends Controller
     {
         $site = Site::where('dns', $siteDns)->firstOrFail();
     
-        $pages = Page::where('idSite', $site->idSite)->with('blocs')->get();
+        $pages = Page::where('idSite', $site->idSite)
+        ->with(['blocs' => function($query) {
+            $query->orderBy('ordre', 'asc');
+        }])->get();
     
         $commentaires = Commentaire::whereIn('idPage', $pages->pluck('idPage'))->get();
     

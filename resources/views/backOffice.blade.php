@@ -80,7 +80,6 @@
                                     $type = strtolower($bloc->type);
                                 @endphp
                                 @if(view()->exists("templates.utils.$type"))
-                                    <p>{{ $type }}</p>
                                     @include("templates.utils.$type", ['bloc' => $bloc])
                                     @yield($type)
                                 @else
