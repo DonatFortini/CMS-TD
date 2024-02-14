@@ -95,6 +95,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <input type="hidden" name="description1" id="formDescription1">
+                                <input type="hidden" name="description2" id="formDescription2">
+                                <input type="hidden" name="auteur" id="formAuteur">
                                 <button type="submit" class="md:ml-4 p-2 w-full md:w-auto bg-blue-500 text-white rounded shadow-lg">Créer</button>
                             </div>
                         </div>

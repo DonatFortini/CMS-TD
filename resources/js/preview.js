@@ -4,7 +4,14 @@ const footerSelector = document.querySelector('#footer-select');
 const colorPicker = document.querySelector('#color-picker');
 const fontSelector = document.querySelector('#font-select');
 const fontColorPicker = document.querySelector('#font-color-picker');
+const auteurs = document.querySelectorAll('#auteur');
+const descriptions1 = document.querySelectorAll('#description1');
+const descriptions2 = document.querySelectorAll('#description2');
+const formDescription1 = document.getElementById('formDescription1');
+const formDescription2 = document.getElementById('formDescription2');
+const formAuteur = document.getElementById('formAuteur');
 
+console.log("aa", auteurs[0], descriptions1[0], descriptions2[0]);
 
 document.addEventListener('DOMContentLoaded', () => {
     const url = new URL(window.location.href);
@@ -47,8 +54,6 @@ colorPicker.addEventListener('input', () => {
     navMain.querySelector('#nav-content').style.backgroundColor = chromaValue;
     footer.style.backgroundColor = chromaValue2;
 
-
-
     const textColor = getReadableTextColor(selectedValue);
     navMain.style.color = textColor;
     main.style.color = textColor;
@@ -72,6 +77,11 @@ fontColorPicker.addEventListener('input', () => {
     const selectedValue = fontColorPicker.value;
     const main = document.querySelector('#playground main');
     main.style.color = selectedValue;
+});
+
+
+[...auteurs, ...descriptions1, ...descriptions2].forEach((element) => {
+element.addEventListener('click', () => {console.log("aa"); makeEditable(element)});
 });
 
 function darkenColor(color, amount) {
@@ -101,6 +111,37 @@ function getReadableTextColor(backgroundColor) {
     return brightness > 186 ? 'black' : 'white';
 }
 
+const makeEditable = (element) => {
+    element.setAttribute('contenteditable', 'true');
+    element.style.border = '1px solid red';
+    element.focus();
+    element.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            element.setAttribute('contenteditable', 'false');
+            element.style.border = 'none';
+            verifyContent(element);
+            const formField = "form" + element.id.charAt(0).toUpperCase() + element.id.slice(1);  
+            updateFormValue(element, formField);
+        }
+    });
+};
+
+function verifyContent(element){
+    if (element.textContent === ""){
+        element.textContent = "Cliquez pour éditer";
+    }
+}
+
+const updateFormValue = (element, formField) => {
+    const formInput = document.getElementById(formField);
+    if (element && !element.textContent.trim().startsWith('Lorem ipsum')) {
+        formInput.value = element.textContent.trim();
+    }else {
+        formInput.value = null;
+    }
+    console.log(formDescription1, formDescription2, formAuteur);
+};
 
 
 

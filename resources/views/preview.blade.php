@@ -10,8 +10,6 @@
 @include('templates.navbar.burger')
 @endif
 
-
-
 @if($_GET["main"] == "complex")
 @include('templates.main.complex')
 @elseif($_GET["main"] == "modern")
@@ -22,8 +20,6 @@
 @include('templates.main.simple')
 @endif
 
-
-
 @if($_GET["footer"] == "complex")
 @include('templates.footer.complex')
 @elseif($_GET["footer"] == "modern")
@@ -33,3 +29,4 @@
 @else
 @include('templates.footer.simple')
 @endif
+

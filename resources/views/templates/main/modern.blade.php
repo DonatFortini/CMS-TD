@@ -7,8 +7,8 @@
         </header>
         <div class="prose lg:prose-xl">
             <img src="{{ $site->pathImage ?? 'https://via.placeholder.com/800x400' }}" alt="Image" class="mb-6 rounded-lg shadow-lg">
-            <p>{{ $site->description1 ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...' }}</p>
-            <blockquote class="border-l-4 border-gray-500 italic pl-4 my-6">"{{ $site->description2 ?? 'Suspendisse potenti...' }}"</blockquote>
+            <p id="description1">{{ $site->description1 ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...' }}</p>
+            <blockquote class="border-l-4 border-gray-500 italic pl-4 my-6" id="description2">"{{ $site->description2 ?? 'Suspendisse potenti...' }}"</blockquote>
             <p>Donec et tortor vel felis efficitur vestibulum...</p>
             <p>Quisque nec felis quis dui lobortis fermentum...</p>
             <div class="mt-8">
@@ -16,7 +16,7 @@
                 <div class="flex items-center mb-4">
                     <img src="{{ $site->pathImage ?? 'https://via.placeholder.com/50' }}" alt="Author Avatar" class="w-10 h-10 rounded-full mr-4">
                     <div>
-                        <p class="text-lg font-semibold">{{ $site->auteur ?? 'John Doe' }}</p>
+                        <p class="text-lg font-semibold" id="auteur">{{ $site->auteur ?? 'John Doe' }}</p>
                         <p class="text-sm text-gray-600">Writer & Blogger</p>
                     </div>
                 </div>

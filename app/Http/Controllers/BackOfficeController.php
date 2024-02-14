@@ -28,6 +28,9 @@ class BackOfficeController extends Controller
             'color' => 'required|string|max:255',
             'font-color' => 'required|string|max:255',
             'font-policy' => 'required|string|max:255',
+            'description1' => 'nullable|string|max:255',
+            'description2' => 'nullable|string|max:255',
+            'auteur' => 'nullable|string|max:255',
         ]);
     
         $dns = sprintf("%s.%s",  Auth::user()->email, $validatedData['site_name']);
@@ -42,6 +45,9 @@ class BackOfficeController extends Controller
             'couleurBackground' => $validatedData['color'],
             'couleurPolicy' => $validatedData['font-color'],
             'fontPolicy' => $validatedData['font-policy'],
+            'description1' => $validatedData['description1'],
+            'description2' => $validatedData['description2'],
+            'auteur' => $validatedData['auteur'],
         ]);
     
         if ($site) {
