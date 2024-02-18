@@ -8,6 +8,7 @@ use App\Models\Commentaire;
 use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
 use App\Services\ImageService;
+use App\Models\Bloc;
 
 class BackOfficeController extends Controller
 {
@@ -59,6 +60,52 @@ class BackOfficeController extends Controller
             return redirect()->back()->with('error', 'Failed to create website. Please try again.');
         }
     }
+
+    public function addPage(Request $request){
+        $validatedData = $request->validate([
+            'titre' => 'required|string|max:255',
+            'idSite' => 'required|integer',
+        ]);
+
+        $path = sprintf("%s.%s", Site::find($validatedData['idSite'])->dns, $validatedData['titre']);
+    
+        $page = Page::create([
+            'nom' => $validatedData['titre'],
+            'idSite' => $validatedData['idSite'],
+            'dns' => $path,
+        ]);
+    
+        if ($page) {
+            return redirect()->route('backOffice', ['dns' => Site::find($validatedData['idSite'])->dns])->with('success', 'Page created successfully');
+        } else {
+            return redirect()->back()->with('error', 'Failed to create page. Please try again.');
+        }
+    }
+
+    public function addBloc(Request $request)
+{
+    $validatedData = $request->validate([
+        'blocks' => 'required|array',
+        'idPage' => 'required|integer',
+    ]);
+
+    $blocksData = $validatedData['blocks'];
+    $idPage = $validatedData['idPage'];
+
+    Bloc::where('idPage', $idPage)->delete();
+
+    foreach ($blocksData as $blockData) {
+        Bloc::create([
+            'idPage' => $idPage,
+            'type' => $blockData['type'],
+            'ordre' => $blockData['order'],
+            'hauteur' => $blockData['height']
+        ]);
+    }
+
+    return response()->json($blocksData);
+}
+
     
     
     public function index($siteDns)
@@ -81,7 +128,6 @@ class BackOfficeController extends Controller
     }
 
 
-    
     
     
 

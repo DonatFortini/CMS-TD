@@ -1,5 +1,6 @@
-@section("sous_titre")
-    <div class="sous_tire" style="height:{{$bloc->hauteur}}px; border:1px solid red">
+@section("sous_titre_{$bloc->idBloc}")
+    <div class="sous_tire content" style="height:{{$bloc->hauteur}}px; border:1px solid red">
+        <p>{{$bloc->hauteur}}</p>
         <h2 class="font-bold text-center">{{$bloc->contenu}}</h2>
     </div>
 @endsection

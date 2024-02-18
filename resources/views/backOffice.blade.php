@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'CMSTD') }}</title>
     @vite('resources/css/backOffice.css')
     @vite('resources/css/app.css')
@@ -65,6 +66,31 @@
                         <li id="page_{{ $page->idPage }}" class="page-item cursor-pointer">{{ $page->nom }}</li>
                         @endforeach
                     </ul>
+                    <button id="openAddPageModal" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                        Ajouter une Page
+                    </button>
+                    <div id="addPageModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+                            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                <form method="POST" action="{{ route('pages.store') }}" class="p-4">
+                                    @csrf
+                                    <div class="mb-4">
+                                        <label for="titre" class="block text-gray-700 text-sm font-bold mb-2">Titre de la page :</label>
+                                        <input type="text" name="titre" id="titre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    </div>
+
+                                    <input type="hidden" name="idSite" value="{{ $site->idSite }}">
+
+                                    <div class="flex items-center justify-end">
+                                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                            Ajouter
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <main id="page-constructor" class="w-3/5 bg-gray-200 overflow-scroll">
@@ -80,10 +106,11 @@
                             @foreach ($page->blocs as $bloc)
                             @php
                             $type = strtolower($bloc->type);
+                            $sectionName = "{$type}_{$bloc->idBloc}";
                             @endphp
                             @if(view()->exists("templates.utils.$type"))
                             @include("templates.utils.$type", ['bloc' => $bloc])
-                            <li id="bloc_{{ $order }}"
+                            <li id="bloc_{{ $order }}" data-type="{{ $bloc->type }}"
                                 class="flex-col bg-slate-300 border-2 border-black m-5 rounded-3xl cursor-grab"
                                 data-id="{{ $bloc->idBloc }}" style="min-height: 75px;">
                                 <div class="flex justify-between p-2">
@@ -93,7 +120,7 @@
                                     </button>
                                     <label for="name" class="bg-slate-400 inline-block">Type {{$bloc->type}}</label>
                                 </div>
-                                @yield($type)
+                                @yield($sectionName)
                             </li>
                             @php
                             $order++;
@@ -110,13 +137,17 @@
 
                 <section id="blockSection" class="bg-slate-100 w-1/5">
                     <ul id="listeBlocks">
-                        <li id="texte" class="cursor-grab">Zone de texte</li>
-                        <li id="image" class="cursor-grab">Image</li>
-                        <li id="titre" class="cursor-grab">Titre</li>
-                        <li id="stitre" class="cursor-grab">Sous-titre</li>
-                        <li id="formulaire" class="cursor-grab">Formulaire</li>
-                        <li id="contact" class="cursor-grab">Contact</li>
+                        <li id="texte" data-type='text_zone' class="cursor-grab">Zone de texte</li>
+                        <li id="image" data-type='image' class="cursor-grab">Image</li>
+                        <li id="titreBlock" data-type='titre' class="cursor-grab">Titre</li>
+                        <li id="stitre" data-type='sous_titre'class="cursor-grab">Sous-titre</li>
+                        <li id="formulaire" data-type='form'class="cursor-grab">Formulaire</li>
+                        <li id="contact" data-type='contact' class="cursor-grab">Contact</li>
                     </ul>
+                    @csrf
+                    <button id="addBlocs" data-store-url="{{ route('blocks.store') }}" data-page-id="{{ $currentPageId }}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                        Valider les modifications
+                    </button>
                 </section>
             </div>
 
@@ -159,30 +190,6 @@
         </main>
 
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const pageItems = document.querySelectorAll('#liste_page li');
-            const urlParams = new URLSearchParams(window.location.search);
-            const pageId = urlParams.get('page');
-
-            pageItems.forEach(item => {
-                item.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    window.history.pushState({}, '', '?page=' + this.id.replace('page_', ''));
-                    highlightSelectedItem(this);
-                });
-
-                if (item.id === pageId) {
-                    highlightSelectedItem(item);
-                }
-            });
-
-            function highlightSelectedItem(item) {
-                pageItems.forEach(it => it.classList.remove('bg-purple-500', 'text-white'));
-                item.classList.add('bg-purple-500', 'text-white');
-            }
-        });
-    </script>
 
 </body>
 

@@ -30,6 +30,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/client", "App\Http\Controllers\ClientController@index")->name('client');
 
     Route::delete('/comments/{comment}', 'App\Http\Controllers\CommentsController@destroy')->name('comments.destroy');
+    
+    Route::post('/pages/store', "App\Http\Controllers\BackOfficeController@addPage")->name('pages.store');
+    Route::post('/blocks/store', "App\Http\Controllers\BackOfficeController@addBloc")->name('blocks.store');
+
+    Route::post('/contact/store', "App\Http\Controllers\ContactController@store")->name('contact.store');
+    Route::post('/page/store', "App\Http\Controllers\BackOfficeController@addPage")->name('page.store');
+
+    Route::get('/get-block-content/{type}/{idPage}', 'App\Http\Controllers\BlockController@getBlockContent');
 
 });
 
