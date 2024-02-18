@@ -10,8 +10,30 @@ const descriptions2 = document.querySelectorAll('#description2');
 const formDescription1 = document.getElementById('formDescription1');
 const formDescription2 = document.getElementById('formDescription2');
 const formAuteur = document.getElementById('formAuteur');
+const logo = document.querySelector('#playground #Logo');
+const siteNameInput = document.querySelector('#siteNameBar');
+const final= document.querySelector('#finalisation');
 
-console.log("aa", auteurs[0], descriptions1[0], descriptions2[0]);
+siteNameInput.addEventListener('blur', () => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", "200");
+    svg.setAttribute("height", "100");
+    svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+    svg.setAttribute("version", "1.1");
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("x", "10");
+    text.setAttribute("y", "50");
+    text.setAttribute("font-size", "20");
+    text.setAttribute("font-family", "SixtyFour");
+    text.textContent = siteNameInput.value || "Nom du site";
+    svg.appendChild(text);
+    while (logo.firstChild) {
+        logo.removeChild(logo.firstChild);
+    }
+    logo.appendChild(svg);
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const url = new URL(window.location.href);
@@ -51,7 +73,7 @@ colorPicker.addEventListener('input', () => {
     const chromaValue = darkenColor(selectedValue, 20);
     const chromaValue2 = darkenColor(selectedValue, 30);
     navMain.style.backgroundColor = chromaValue;
-    navMain.querySelector('#nav-content').style.backgroundColor = chromaValue;
+    if (navMain.querySelector('#nav-content')) navMain.querySelector('#nav-content').style.backgroundColor = chromaValue;
     footer.style.backgroundColor = chromaValue2;
 
     const textColor = getReadableTextColor(selectedValue);
@@ -81,7 +103,7 @@ fontColorPicker.addEventListener('input', () => {
 
 
 [...auteurs, ...descriptions1, ...descriptions2].forEach((element) => {
-element.addEventListener('click', () => {console.log("aa"); makeEditable(element)});
+    element.addEventListener('click', () => { console.log("aa"); makeEditable(element) });
 });
 
 function darkenColor(color, amount) {
@@ -121,14 +143,14 @@ const makeEditable = (element) => {
             element.setAttribute('contenteditable', 'false');
             element.style.border = 'none';
             verifyContent(element);
-            const formField = "form" + element.id.charAt(0).toUpperCase() + element.id.slice(1);  
+            const formField = "form" + element.id.charAt(0).toUpperCase() + element.id.slice(1);
             updateFormValue(element, formField);
         }
     });
 };
 
-function verifyContent(element){
-    if (element.textContent === ""){
+function verifyContent(element) {
+    if (element.textContent === "") {
         element.textContent = "Cliquez pour éditer";
     }
 }
@@ -137,7 +159,7 @@ const updateFormValue = (element, formField) => {
     const formInput = document.getElementById(formField);
     if (element && !element.textContent.trim().startsWith('Lorem ipsum')) {
         formInput.value = element.textContent.trim();
-    }else {
+    } else {
         formInput.value = null;
     }
     console.log(formDescription1, formDescription2, formAuteur);

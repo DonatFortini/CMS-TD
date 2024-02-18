@@ -2,7 +2,7 @@
 <nav class="bg-gray-800 p-4">
     <div class="container mx-auto flex justify-between items-center relative">
         <div id="x" class="relative">
-            <a href="#" class="text-white font-bold mr-8 p-4">Your Logo</a>
+            <a href="#" id="Logo" class="text-white font-bold mr-8 p-4"></a>
             <button id="nav-toggle" class="text-white lg:hidden focus:outline-none absolute right-0 top-0 mt-1 mr-4">
                 <img src="{{ asset('assets/burger.svg') }}" alt="Burger Menu" class="w-6">
             </button>

@@ -3,7 +3,7 @@
     <div class="container mx-auto px-4 py-2">
         <div class="flex justify-between items-center">
             <div>
-                <a href="#" class="text-white font-bold">Your Logo</a>
+                <a href="#" id="Logo" class="text-white font-bold"></a>
             </div>
             <div class="hidden lg:flex lg:items-center lg:w-auto">
                 <ul class="list-reset lg:flex justify-end flex-1 items-center">
