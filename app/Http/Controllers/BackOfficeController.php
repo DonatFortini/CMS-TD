@@ -99,7 +99,8 @@ class BackOfficeController extends Controller
             'idPage' => $idPage,
             'type' => $blockData['type'],
             'ordre' => $blockData['order'],
-            'hauteur' => $blockData['height']
+            'hauteur' => $blockData['height'],
+            'contenu' => $blockData['contenu'] ?? null
         ]);
     }
 

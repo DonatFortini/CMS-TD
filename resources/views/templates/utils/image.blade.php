@@ -1,8 +1,27 @@
 @section("image_{$bloc->idBloc}")
-    <div class="flex flex-col items-center justify-center content">
-        <h1 class="font-bold text-center">Contenu de la page</h1>
-        <div id="playground" class="w-3/4" style="height:{{$bloc->hauteur}}px; border:1px solid red">
-            <img src="{{ asset('storage/images/'.$image->url) }}" alt="{{ $image->alt }}" class="w-full">
-        </div>
+<head>
+    @vite('resources/js/image.js')
+    @vite('resources/css/image.css')
+</head>
+<div class="flex flex-col items-center justify-center content">
+    <h1 class="font-bold text-center">Image Block</h1>
+    <div class="image-select">
+        <label for="imageSelect{{ $bloc->idBloc }}">Choisissez une image :</label>
+        <select id="imageSelect{{ $bloc->idBloc }}" class="image-select-dropdown">
+            @foreach(File::allFiles(public_path('assets/imageBlocs')) as $image)
+                <option value="{{ basename($image) }}">{{ basename($image) }}</option>
+            @endforeach
+        </select>
     </div>
+    <div id="imagePreview{{ $bloc->idBloc }}" class="image-preview">
+    </div>
+</div>
+
+<script>
+    document.getElementById('imageSelect{{ $bloc->idBloc }}').addEventListener('change', function() {
+        const selectedImage = this.value;
+        const previewDiv = document.getElementById('imagePreview{{ $bloc->idBloc }}');
+        previewDiv.innerHTML = `<img src="/assets/imageBlocs/${selectedImage}" alt="${selectedImage}" class="w-full">`;
+    });
+</script>
 @endsection

@@ -184,13 +184,21 @@ document.getElementById('addBlocs').addEventListener('click', function() {
     const blocks = [];
     document.querySelectorAll('#disposition_page li').forEach((li, index) => {
         const blockHeight = li.offsetHeight;
+        const blockType = li.getAttribute('data-type');
+        let blockContent = '';
+
+        if (blockType === 'image') {
+            const selectElement = li.querySelector('.image-select-dropdown');
+            blockContent = selectElement ? selectElement.value : '';
+        }
+
         blocks.push({
             type: li.getAttribute('data-type'),
             order: index + 1,
-            height: blockHeight
+            height: blockHeight,
+            contenu: blockContent
         });
    });
-    console.log(blocks)
     fetch(storeUrl, {
         method: 'POST',
         headers: {
