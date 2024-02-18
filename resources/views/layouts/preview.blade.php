@@ -25,7 +25,7 @@
                         <div class="md:flex-grow">
                             <div class="text-sm flex flex-col md:flex-row md:justify-end mt-4 md:mt-0">
                                 <div class="md:flex items-center">
-                                    <input type="text" name="site_name" placeholder="Nom du Site" class="mb-2 md:mb-0 md:mr-2 p-1 border border-gray-300 rounded">
+                                    <input id="siteNameBar" type="text" name="site_name" placeholder="Nom du Site" class="mb-2 md:mb-0 md:mr-2 p-1 border border-gray-300 rounded">
                                     <div class="flex flex-wrap items-center justify-between space-x-2 md:space-x-4">
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="navbar-select" class="mr-2">Navbar Template:</label>
@@ -98,7 +98,7 @@
                                 <input type="hidden" name="description1" id="formDescription1">
                                 <input type="hidden" name="description2" id="formDescription2">
                                 <input type="hidden" name="auteur" id="formAuteur">
-                                <button type="submit" class="md:ml-4 p-2 w-full md:w-auto bg-blue-500 text-white rounded shadow-lg">Créer</button>
+                                <button id="finalisation" type="submit" class="md:ml-4 p-2 w-full md:w-auto bg-blue-500 text-white rounded shadow-lg">Créer</button>
                             </div>
                         </div>
                     </div>

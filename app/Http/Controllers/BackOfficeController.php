@@ -53,7 +53,7 @@ class BackOfficeController extends Controller
     
         if ($site) {
             $filename = Auth::user()->email . '_' . $validatedData['site_name'];
-            $this->imageService->generateImage($validatedData['site_name'], $filename);
+            
 
             return redirect()->route('backOffice', ['dns' => $site->dns])->with('success', 'Website created successfully');
         } else {
