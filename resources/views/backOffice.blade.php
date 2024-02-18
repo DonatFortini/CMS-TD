@@ -63,7 +63,11 @@
                 <section class="w-1/5">
                     <ul id="liste_page">
                         @foreach ($pages as $page)
-                        <li id="page_{{ $page->idPage }}" class="page-item cursor-pointer">{{ $page->nom }}</li>
+                        @if(isset($_GET['page']) && $_GET['page'] == "page_$page->idPage")
+                            <li id="page_{{ $page->idPage }}" class="page-item cursor-pointer bg-purple-500">{{ $page->nom }}</li>
+                        @else
+                            <li id="page_{{ $page->idPage }}" class="page-item cursor-pointer">{{ $page->nom }}</li>
+                        @endif
                         @endforeach
                     </ul>
                     <button id="openAddPageModal" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
@@ -139,10 +143,11 @@
                     <ul id="listeBlocks">
                         <li id="texte" data-type='text_zone' class="cursor-grab">Zone de texte</li>
                         <li id="image" data-type='image' class="cursor-grab">Image</li>
-                        <li id="titreBlock" data-type='titre' class="cursor-grab">Titre</li>
+                        <li id="titre" data-type='titre' class="cursor-grab">Titre</li>
                         <li id="stitre" data-type='sous_titre'class="cursor-grab">Sous-titre</li>
                         <li id="formulaire" data-type='form'class="cursor-grab">Formulaire</li>
                         <li id="contact" data-type='contact' class="cursor-grab">Contact</li>
+                        <li id="commentaires" data-type='commentaires' class="cursor-grab">Commentaires</li>
                     </ul>
                     @csrf
                     <button id="addBlocs" data-store-url="{{ route('blocks.store') }}" data-page-id="{{ $currentPageId }}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">

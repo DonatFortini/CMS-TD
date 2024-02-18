@@ -1,5 +1,3 @@
-// display pages
-
 const features = [
     { button: document.querySelector('#create'), sectionIndex: 0 },
     { button: document.querySelector('#comments'), sectionIndex: 1 },
@@ -14,41 +12,103 @@ const defaultBlockHeights = {
     'contact': 400
 };
 
-
 const sections = document.querySelectorAll('[id^="section-"]');
 
 features.forEach(feature => {
     feature.button.addEventListener('click', function () {
-        const active = findActiveFeature();
-        if (active != feature.button) {
-            active.classList.remove('active');
+        const active = document.querySelector('.active');
+        if (active !== feature.button) {
+            active?.classList.remove('active');
             feature.button.classList.add('active');
-            findActiveSection().classList.add('hidden');
-            sections[feature.sectionIndex].classList.remove('hidden');
-            sections[feature.sectionIndex].classList.add('flex');
+            findActiveSection()?.classList.replace('flex', 'hidden');
+            sections[feature.sectionIndex]?.classList.replace('hidden', 'flex');
         }
     });
 });
 
 function findActiveSection() {
-    let active;
-    sections.forEach(section => {
-        active = (!section.classList.contains('hidden')) ? section : active;
+    return Array.from(sections).find(section => !section.classList.contains('hidden'));
+}
+
+document.getElementById('openAddPageModal').addEventListener('click', function () {
+    document.getElementById('addPageModal').classList.remove('hidden');
+});
+
+document.getElementById('addBlocs').addEventListener('click', function () {
+    const storeUrl = this.getAttribute('data-store-url');
+    const pageId = this.getAttribute('data-page-id');
+    const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const blocks = Array.from(document.querySelectorAll('#disposition_page li')).map((li, index) => ({
+        type: li.getAttribute('data-type'),
+        order: index + 1,
+        height: li.offsetHeight
+    }));
+    fetch(storeUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrf
+        },
+        body: JSON.stringify({ blocks, idPage: pageId })
+    }).then(response => {
+        if (response.ok) {
+            alert('Blocks saved successfully!');
+        } else {
+            alert(response.statusText);
+            alert('Error saving blocks');
+        }
     });
-    return active;
+});
+
+function addResizeFunctionality(li) {
+    const resizeHandle = document.createElement('div');
+    resizeHandle.classList.add('resize-handle');
+    li.appendChild(resizeHandle);
+    let startY, startHeight;
+
+    resizeHandle.addEventListener('mousedown', function (e) {
+        startY = e.clientY;
+        startHeight = parseInt(document.defaultView.getComputedStyle(li).height, 10);
+        document.documentElement.addEventListener('mousemove', doDrag, false);
+        document.documentElement.addEventListener('mouseup', stopDrag, false);
+        e.preventDefault();
+    });
+
+    function doDrag(e) {
+        const newHeight = startHeight + e.clientY - startY;
+        li.style.height = `${newHeight}px`;
+        const contentDivs = li.querySelectorAll('div.content');
+        contentDivs.forEach(div => {
+            div.style.height = '100%';
+        });
+        if (newHeight + li.getBoundingClientRect().top > window.innerHeight) {
+            li.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+    }
+
+    function stopDrag() {
+        document.documentElement.removeEventListener('mousemove', doDrag, false);
+        document.documentElement.removeEventListener('mouseup', stopDrag, false);
+    }
 }
 
-function findActiveFeature() {
-    return document.querySelector('.active');
+function setUp() {
+    const blocks = document.querySelectorAll('#disposition_page li');
+    let counter = 1;
+    blocks.forEach(block => {
+        addResizeFunctionality(block);
+        block.id = `bloc_${counter}`;
+        counter++;
+    });
 }
 
-// drag and drop blocks section 1
+//// section 1
 
-const listBlocks = document.querySelectorAll('#listeBlocks li');
+const blockTypeList = document.querySelectorAll('#listeBlocks li');
 const playground = document.querySelector('#playground');
-const pages = document.querySelectorAll('[id^="page_"]');
 const blocksDisposition = document.querySelector('#disposition_page');
-let dropPosition = null;
+const blocklist = document.querySelectorAll('#disposition_page li');
+const pages = document.querySelectorAll('[id^="page_"]');
 
 pages.forEach(page => {
     page.addEventListener('click', () => {
@@ -58,77 +118,88 @@ pages.forEach(page => {
     });
 });
 
-listBlocks.forEach(item => {
+blockTypeList.forEach(item => {
     item.setAttribute('draggable', true);
     item.addEventListener('dragstart', function (event) {
         event.dataTransfer.setData('Text', item.id);
     });
 });
 
+blocklist.forEach(bloc => {
+    bloc.setAttribute('draggable', true);
+    bloc.addEventListener('dragstart', function (event) {
+        event.dataTransfer.setData('Text', bloc.id);
+    });
+});
 
-playground.addEventListener('dragover', function(event) {
+playground.addEventListener('dragover', function (event) {
     event.preventDefault();
 });
 
-playground.addEventListener('drop', function(event) {
-    console.log('Drop détecté');
-    event.preventDefault();
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const pageId = urlParams.get('page').replace('page_', '');
-    const itemId = event.dataTransfer.getData('Text');
-    const itemType = document.getElementById(itemId).getAttribute('data-type');
-    const newLi = document.createElement('li');
-    newLi.setAttribute('data-type', itemType);
-    newLi.id = `block_${new Date().getTime()}`;
-    newLi.classList.add('flex-col', 'bg-slate-300', 'border-2', 'border-black', 'm-5', 'rounded-3xl');
-    newLi.style.height = defaultBlockHeights[itemType] + 'px';
-    console.log(itemId, itemType, pageId)
-    fetch(`/get-block-content/${itemType}/${pageId}`)
-        .then(response => response.text())
-        .then(html => {
-            newLi.innerHTML = html;
-            addResizeFunctionality(newLi);
-            blocksDisposition.appendChild(newLi);
-        })
-        .catch(error => console.error('Erreur lors de la récupération du contenu du bloc :', error));
+playground.addEventListener('drop', function (event) {
+    const data = event.dataTransfer.getData('Text');
+    
+    if (!data.includes('bloc')) {
+        event.preventDefault();
+        const pageId = (new URLSearchParams(window.location.search)).get('page').replace('page_', '');
+        const itemType = document.getElementById(data).getAttribute('data-type');
+        
+        const newLi = document.createElement('li');
+        newLi.setAttribute('data-type', itemType);
+        newLi.setAttribute('draggable', true);
+        newLi.id = `block_${new Date().getTime()}`;
+        newLi.classList.add('flex-col', 'bg-slate-300', 'border-2', 'border-black', 'm-5', 'rounded-3xl');
+        newLi.style.height = `${defaultBlockHeights[itemType]}px`;
+        
+        const container = document.createElement('div');
+        container.classList.add('flex', 'justify-between', 'p-2');
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('bg-slate-400', 'rounded-3xl', 'hover:bg-red-500', 'hover:text-white', 'transition', 'duration-400', 'inline-block');
+        
+        const deleteIcon = document.createElement('img');
+        deleteIcon.src = '/assets/trash.svg';
+        deleteIcon.classList.add('w-7', 'h-7');
+        
+        const label = document.createElement('label');
+        label.textContent = "Type " + itemType;
+        label.classList.add('bg-slate-400', 'inline-block');
+        
+        const div = document.createElement('div');
+        
+        deleteButton.appendChild(deleteIcon);
+        container.appendChild(deleteButton);
+        container.appendChild(label);
+        newLi.appendChild(container);
+        
+        fetch(`/get-block-content/${itemType}/${pageId}`)
+            .then(response => response.text())
+            .then(html => {
+                div.innerHTML = html;
+                newLi.appendChild(div);
+                addResizeFunctionality(newLi);
+                blocksDisposition.appendChild(newLi);
+            })
+            .catch(error => console.error('Error fetching block content:', error));
+    } else {
+        const item = document.getElementById(data);
+        const dropPosition = event.target.closest('li');
+        blocksDisposition.insertBefore(item, dropPosition.nextSibling);
+    }
+    
+    setUp();
 });
 
-// TODO finir la feature
-// blocksDisposition.forEach(block => {
-//     block.setAttribute('draggable', true);
-//     block.addEventListener('dragstart', function (event) {
-//         event.dataTransfer.setData('Text', block.id);
-//     });
+//// section 2
 
-//     block.addEventListener('dragover', function (event) {
-//         event.preventDefault();
-//         const rect = block.getBoundingClientRect();
-//         const mouseY = event.clientY - rect.top;
-//         const itemHeight = 75;
-//         dropPosition = Math.floor(mouseY / itemHeight);
-//     });
-
-//     block.addEventListener('drop', function (event) {
-//         event.preventDefault();
-        
-//     });
-        
-
-// });
-
-
-////// section 2
-
-
-const comments = document.querySelectorAll('.comment-box p');
 const bannedWords = ['enculé', 'batard', 'fils de pute', 'connard', 'salope', 'pute', 'merde', 'nique ta mère', 'nique ta mere'];
+const comments = document.querySelectorAll('.comment-box p');
 
 comments.forEach(comment => {
     bannedWords.forEach(word => {
         const regex = new RegExp(`\\b${word}\\b`, 'gi');
         if (regex.test(comment.textContent)) {
-            const replacedText = comment.textContent.replace(regex, `<span class="bg-red-500">${word}</span>`);
+            const replacedText = comment.innerHTML.replace(regex, `<span class="bg-red-500">${word}</span>`);
             comment.innerHTML = replacedText;
         }
     });
@@ -141,119 +212,11 @@ searchButton.addEventListener('click', function () {
     const searchValue = searchBar.value.trim().toLowerCase();
     comments.forEach(comment => {
         const commentText = comment.textContent.toLowerCase();
+        const parentElement = comment.closest('.comment-box');
         if (commentText.includes(searchValue)) {
-            comment.parentElement.parentElement.classList.remove('hidden');
+            parentElement.classList.remove('hidden');
         } else {
-            comment.parentElement.parentElement.classList.add('hidden');
+            parentElement.classList.add('hidden');
         }
     });
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-    const pageItems = document.querySelectorAll('#liste_page li');
-    const urlParams = new URLSearchParams(window.location.search);
-    const pageId = urlParams.get('page');
-
-    pageItems.forEach(item => {
-        item.addEventListener('click', function (event) {
-            event.preventDefault();
-            window.history.pushState({}, '', '?page=' + this.id.replace('page_', ''));
-            highlightSelectedItem(this);
-        });
-
-        if (item.id === pageId) {
-            highlightSelectedItem(item);
-        }
-    });
-
-    function highlightSelectedItem(item) {
-        pageItems.forEach(it => it.classList.remove('bg-purple-500', 'text-white'));
-        item.classList.add('bg-purple-500', 'text-white');
-    }
-});
-
-document.getElementById('openAddPageModal').addEventListener('click', function () {
-    document.getElementById('addPageModal').classList.remove('hidden');
-});
-
-
-document.getElementById('addBlocs').addEventListener('click', function() {
-    const storeUrl = this.getAttribute('data-store-url');
-    const pageId = this.getAttribute('data-page-id');
-    const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const blocks = [];
-    document.querySelectorAll('#disposition_page li').forEach((li, index) => {
-        const blockHeight = li.offsetHeight;
-        const blockType = li.getAttribute('data-type');
-        let blockContent = '';
-
-        if (blockType === 'image') {
-            const selectElement = li.querySelector('.image-select-dropdown');
-            blockContent = selectElement ? selectElement.value : '';
-        }
-
-        blocks.push({
-            type: li.getAttribute('data-type'),
-            order: index + 1,
-            height: blockHeight,
-            contenu: blockContent
-        });
-   });
-    fetch(storeUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrf
-        },
-        body: JSON.stringify({
-            blocks: blocks,
-            idPage: pageId
-        })
-    }).then(response => {
-        if (response.ok) {
-            alert('Blocs enregistrés avec succès!');
-        } else {
-            alert(response.statusText);
-            alert('Erreur lors de l\'enregistrement des blocs');
-        }
-    });
-});
-function addResizeFunctionality(li) {
-    const resizeHandle = document.createElement('div');
-    resizeHandle.classList.add('resize-handle');
-    li.appendChild(resizeHandle);
-
-    let startY, startHeight;
-
-    resizeHandle.addEventListener('mousedown', function(e) {
-        startY = e.clientY;
-        startHeight = parseInt(document.defaultView.getComputedStyle(li).height, 10);
-        document.documentElement.addEventListener('mousemove', doDrag, false);
-        document.documentElement.addEventListener('mouseup', stopDrag, false);
-        e.preventDefault();
-    });
-
-    function doDrag(e) {
-        const newHeight = startHeight + e.clientY - startY;
-        li.style.height = newHeight + 'px';
-
-        const contentDivs = li.querySelectorAll('div.content');
-        contentDivs.forEach(div => {
-            div.style.height = '100%';
-        });
-
-        if (newHeight + li.getBoundingClientRect().top > window.innerHeight) {
-            li.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }
-    }
-
-    function stopDrag() {
-        document.documentElement.removeEventListener('mousemove', doDrag, false); 
-        document.documentElement.removeEventListener('mouseup', stopDrag, false);
-    }
-}
-
-document.querySelectorAll('#disposition_page li').forEach(li => {
-    addResizeFunctionality(li);
-});
-
