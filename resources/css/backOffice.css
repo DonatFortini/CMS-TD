@@ -24,3 +24,9 @@
 li {
     box-sizing: border-box;
 }
+
+.editable:empty:before {
+    content: attr(data-placeholder);
+    color: grey;
+    font-style: italic;
+}

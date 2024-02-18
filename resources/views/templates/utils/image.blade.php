@@ -9,19 +9,11 @@
         <label for="imageSelect{{ $bloc->idBloc }}">Choisissez une image :</label>
         <select id="imageSelect{{ $bloc->idBloc }}" class="image-select-dropdown">
             @foreach(File::allFiles(public_path('assets/imageBlocs')) as $image)
-                <option value="{{ basename($image) }}">{{ basename($image) }}</option>
-            @endforeach
+            <option value="{{ basename($image) }}" {{ basename($image) == $bloc->contenu ? 'selected' : '' }}>{{ basename($image) }}</option>            @endforeach
         </select>
     </div>
     <div id="imagePreview{{ $bloc->idBloc }}" class="image-preview">
     </div>
 </div>
 
-<script>
-    document.getElementById('imageSelect{{ $bloc->idBloc }}').addEventListener('change', function() {
-        const selectedImage = this.value;
-        const previewDiv = document.getElementById('imagePreview{{ $bloc->idBloc }}');
-        previewDiv.innerHTML = `<img src="/assets/imageBlocs/${selectedImage}" alt="${selectedImage}" class="w-full">`;
-    });
-</script>
 @endsection

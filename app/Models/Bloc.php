@@ -18,6 +18,7 @@ class Bloc extends Model
         'ordre',
         'hauteur',
         'idPage',
+        'contenu'
     ];
 
     public function page()

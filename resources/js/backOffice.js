@@ -41,12 +41,15 @@ document.getElementById('addBlocs').addEventListener('click', function () {
     const blocks = Array.from(document.querySelectorAll('#disposition_page li')).map((li, index) => {
         const blockType = li.getAttribute('data-type');
         let blockContent = '';
-
         if (blockType === 'image') {
-            const imageSelect = li.querySelector('.image-select');
+            const imageSelect = li.querySelector('.image-select-dropdown');
             blockContent = imageSelect ? imageSelect.value : '';
         }
 
+        if ( blockType === 'sous_titre' || blockType === 'titre' || blockType === 'text_zone') {
+            const textArea = li.querySelector('.textarea');
+            blockContent = textArea ? textArea.textContent : '';
+        }
         return {
             type: blockType,
             order: index + 1,
@@ -177,17 +180,7 @@ playground.addEventListener('drop', function (event) {
         label.classList.add('bg-slate-400', 'inline-block');
         
         const div = document.createElement('div');
-
-        if (itemType === 'image') {
-            const select = document.createElement('select');
-            select.classList.add('image-select');
-            select.innerHTML = `<option value="">Select an Image</option>
-                                <option value="image1.jpg">Image 1</option>
-                                <option value="image2.jpg">Image 2</option>`;
-            select.onchange = function () { updateBlockContent(newLi.id, this.value); };
-            div.appendChild(select);
-        }
-        
+    
         deleteButton.appendChild(deleteIcon);
         container.appendChild(deleteButton);
         container.appendChild(label);
@@ -242,11 +235,3 @@ searchButton.addEventListener('click', function () {
     });
 });
 
-function updateBlockContent(blockId, imageUrl) {
-    const block = document.getElementById(blockId);
-    if (block) {
-        const imageContainer = block.querySelector('.block-content') || block.appendChild(document.createElement('div'));
-        imageContainer.classList.add('block-content');
-        imageContainer.innerHTML = `<img src="/assets/imageBlocs/${imageUrl}" alt="Selected Image" style="width: 100%; height: auto;">`;
-    }
-}

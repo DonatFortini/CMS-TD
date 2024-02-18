@@ -143,7 +143,7 @@
                     <ul id="listeBlocks">
                         <li id="texte" data-type='text_zone' class="cursor-grab">Zone de texte</li>
                         <li id="image" data-type='image' class="cursor-grab">Image</li>
-                        <li id="titre" data-type='titre' class="cursor-grab">Titre</li>
+                        <li id="titreBlock" data-type='titre' class="cursor-grab">Titre</li>
                         <li id="stitre" data-type='sous_titre'class="cursor-grab">Sous-titre</li>
                         <li id="formulaire" data-type='form'class="cursor-grab">Formulaire</li>
                         <li id="contact" data-type='contact' class="cursor-grab">Contact</li>
