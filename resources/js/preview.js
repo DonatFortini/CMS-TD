@@ -51,7 +51,7 @@ colorPicker.addEventListener('input', () => {
     const chromaValue = darkenColor(selectedValue, 20);
     const chromaValue2 = darkenColor(selectedValue, 30);
     navMain.style.backgroundColor = chromaValue;
-    navMain.querySelector('#nav-content').style.backgroundColor = chromaValue;
+    if(navMain.querySelector('#nav-content')) navMain.querySelector('#nav-content').style.backgroundColor = chromaValue;
     footer.style.backgroundColor = chromaValue2;
 
     const textColor = getReadableTextColor(selectedValue);
