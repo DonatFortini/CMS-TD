@@ -38,11 +38,22 @@ document.getElementById('addBlocs').addEventListener('click', function () {
     const storeUrl = this.getAttribute('data-store-url');
     const pageId = this.getAttribute('data-page-id');
     const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const blocks = Array.from(document.querySelectorAll('#disposition_page li')).map((li, index) => ({
-        type: li.getAttribute('data-type'),
-        order: index + 1,
-        height: li.offsetHeight
-    }));
+    const blocks = Array.from(document.querySelectorAll('#disposition_page li')).map((li, index) => {
+        const blockType = li.getAttribute('data-type');
+        let blockContent = '';
+
+        if (blockType === 'image') {
+            const imageSelect = li.querySelector('.image-select');
+            blockContent = imageSelect ? imageSelect.value : '';
+        }
+
+        return {
+            type: blockType,
+            order: index + 1,
+            height: li.offsetHeight,
+            contenu: blockContent
+        };
+    });
     fetch(storeUrl, {
         method: 'POST',
         headers: {
@@ -166,6 +177,16 @@ playground.addEventListener('drop', function (event) {
         label.classList.add('bg-slate-400', 'inline-block');
         
         const div = document.createElement('div');
+
+        if (itemType === 'image') {
+            const select = document.createElement('select');
+            select.classList.add('image-select');
+            select.innerHTML = `<option value="">Select an Image</option>
+                                <option value="image1.jpg">Image 1</option>
+                                <option value="image2.jpg">Image 2</option>`;
+            select.onchange = function () { updateBlockContent(newLi.id, this.value); };
+            div.appendChild(select);
+        }
         
         deleteButton.appendChild(deleteIcon);
         container.appendChild(deleteButton);
@@ -220,3 +241,12 @@ searchButton.addEventListener('click', function () {
         }
     });
 });
+
+function updateBlockContent(blockId, imageUrl) {
+    const block = document.getElementById(blockId);
+    if (block) {
+        const imageContainer = block.querySelector('.block-content') || block.appendChild(document.createElement('div'));
+        imageContainer.classList.add('block-content');
+        imageContainer.innerHTML = `<img src="/assets/imageBlocs/${imageUrl}" alt="Selected Image" style="width: 100%; height: auto;">`;
+    }
+}
