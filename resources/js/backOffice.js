@@ -20,7 +20,7 @@ features.forEach(feature => {
         if (active !== feature.button) {
             active?.classList.remove('active');
             feature.button.classList.add('active');
-            findActiveSection()?.classList.replace('hidden', 'flex');
+            findActiveSection()?.classList.replace('flex', 'hidden');
             sections[feature.sectionIndex]?.classList.replace('hidden', 'flex');
         }
     });
