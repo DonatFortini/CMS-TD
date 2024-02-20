@@ -118,7 +118,7 @@
                                 class="flex-col bg-slate-300 border-2 border-black m-5 rounded-3xl cursor-grab"
                                 data-id="{{ $bloc->idBloc }}" style="min-height: 75px;">
                                 <div class="flex justify-between p-2">
-                                    <button
+                                    <button id="deletebloc_{{ $order }}"
                                         class="bg-slate-400 rounded-3xl hover:bg-red-500 hover:text-white transition duration-400 inline-block">
                                         <img src="{{ asset('assets/trash.svg') }}" class="w-7 h-7">
                                     </button>

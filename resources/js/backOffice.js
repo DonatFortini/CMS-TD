@@ -14,6 +14,7 @@ const defaultBlockHeights = {
 
 const sections = document.querySelectorAll('[id^="section-"]');
 
+
 features.forEach(feature => {
     feature.button.addEventListener('click', function () {
         const active = document.querySelector('.active');
@@ -123,6 +124,7 @@ const playground = document.querySelector('#playground');
 const blocksDisposition = document.querySelector('#disposition_page');
 const blocklist = document.querySelectorAll('#disposition_page li');
 const pages = document.querySelectorAll('[id^="page_"]');
+const deleteButtons = document.querySelectorAll('[id^="deletebloc_"]');
 
 pages.forEach(page => {
     page.addEventListener('click', () => {
@@ -202,6 +204,14 @@ playground.addEventListener('drop', function (event) {
     }
     
     setUp();
+});
+
+deleteButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        const num= this.id.split('_')[1];
+        const bloc = document.querySelector(`#bloc_${num}`);
+        bloc.remove();
+    });
 });
 
 //// section 2
