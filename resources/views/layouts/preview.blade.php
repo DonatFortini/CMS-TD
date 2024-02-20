@@ -25,12 +25,15 @@
                         <div class="md:flex-grow">
                             <div class="text-sm flex flex-col md:flex-row md:justify-end mt-4 md:mt-0">
                                 <div class="md:flex items-center">
-                                    <input id="siteNameBar" type="text" name="site_name" placeholder="Nom du Site" class="mb-2 md:mb-0 md:mr-2 p-1 border border-gray-300 rounded">
+                                    <input id="logoString" type="hidden" name="logo" value="">
+                                    <input id="siteNameBar" type="text" name="site_name" placeholder="Nom du Site"
+                                        class="mb-2 md:mb-0 md:mr-2 p-1 border border-gray-300 rounded">
                                     <div class="flex flex-wrap items-center justify-between space-x-2 md:space-x-4">
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="navbar-select" class="mr-2">Navbar Template:</label>
-                                            <select id="navbar-select" name="navbar_template" class="p-1 border border-gray-300 rounded">
-                                    
+                                            <select id="navbar-select" name="navbar_template"
+                                                class="p-1 border border-gray-300 rounded">
+
                                                 <?php
                                                     $navbarOptions = ['burger', 'classic', 'vertical'];
                                                     $selectedNavbar = $_GET["navbar"] ?? '';
@@ -43,8 +46,9 @@
                                         </div>
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="main-select" class="mr-2">Main Template:</label>
-                                            <select id="main-select" name="main_template" class="p-1 border border-gray-300 rounded">
-                                            
+                                            <select id="main-select" name="main_template"
+                                                class="p-1 border border-gray-300 rounded">
+
                                                 <?php
                                                     $mainOptions = ['complex', 'modern', 'simple'];
                                                     $selectedMain = $_GET["main"] ?? '';
@@ -57,8 +61,9 @@
                                         </div>
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="footer-select" class="mr-2">Footer Template:</label>
-                                            <select id="footer-select" name="footer_template" class="p-1 border border-gray-300 rounded">
-                                                
+                                            <select id="footer-select" name="footer_template"
+                                                class="p-1 border border-gray-300 rounded">
+
                                                 <?php
                                                     $footerOptions = ['complex', 'modern', 'simple'];
                                                     $selectedFooter = $_GET["footer"] ?? '';
@@ -76,8 +81,9 @@
 
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="font-select" class="mr-2">Font:</label>
-                                            <select id="font-select" name="font-policy" class="p-1 border border-gray-300 rounded">
-                                             
+                                            <select id="font-select" name="font-policy"
+                                                class="p-1 border border-gray-300 rounded">
+
                                                 <?php
                                                     $fontOptions = ['Arial', 'Helvetica', 'Verdana', 'Georgia', 'Times New Roman', 'Trebuchet MS', 'Arial Black', 'Impact', 'Comic Sans MS', 'Courier New', 'Lucida Console'];
                                                     $selectedFont = $_GET["font"] ?? '';
@@ -91,14 +97,16 @@
 
                                         <div class="flex items-center mb-2 md:mb-0">
                                             <label for="text-color-picker" class="mr-2">Text Color:</label>
-                                            <input type="color" name="font-color" id="font-color-picker" class="p-1 rounded-full">
+                                            <input type="color" name="font-color" id="font-color-picker"
+                                                class="p-1 rounded-full">
                                         </div>
                                     </div>
                                 </div>
                                 <input type="hidden" name="description1" id="formDescription1">
                                 <input type="hidden" name="description2" id="formDescription2">
                                 <input type="hidden" name="auteur" id="formAuteur">
-                                <button id="finalisation" type="submit" class="md:ml-4 p-2 w-full md:w-auto bg-blue-500 text-white rounded shadow-lg">Créer</button>
+                                <button id="finalisation" type="submit"
+                                    class="md:ml-4 p-2 w-full md:w-auto bg-blue-500 text-white rounded shadow-lg">Créer</button>
                             </div>
                         </div>
                     </div>

@@ -41,18 +41,12 @@ siteNameInput.addEventListener('blur', () => {
 
 previewForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const svg=document.querySelector('#Logo svg');
+    const svg = document.querySelector('#Logo svg');
     const svgString = new XMLSerializer().serializeToString(svg);
-    const folderPath = 'assets/logoUtilisateur';
-    const fileName = "user/"+siteNameInput.value;
-    const filePath = join(folderPath, fileName);
-    writeFileSync(filePath, svgString);
-    
-    setTimeout(() => {
-        alert('Votre site a été créé avec succès !')
-        const form = e.target;
-        form.submit();
-    }, 2000); 
+    document.querySelector('#logoString').value = svgString;
+    alert('Votre site a été créé avec succès !');
+    const form = e.target;
+    form.submit();
 });
 
 

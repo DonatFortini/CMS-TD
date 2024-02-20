@@ -29,9 +29,10 @@ class BackOfficeController extends Controller
             'description1' => 'nullable|string|max:255',
             'description2' => 'nullable|string|max:255',
             'auteur' => 'nullable|string|max:255',
+            'logo' => 'nullable|string|max:1000',
         ]);
-    
-        $dns = sprintf("%s.%s",  Auth::user()->email, $validatedData['site_name']);
+
+        $dns = sprintf("%s.%s", Auth::user()->email, $validatedData['site_name']);
 
         $site = Site::create([
             'nom' => $validatedData['site_name'],
@@ -46,8 +47,9 @@ class BackOfficeController extends Controller
             'description1' => $validatedData['description1'],
             'description2' => $validatedData['description2'],
             'auteur' => $validatedData['auteur'],
+            'logo' => $validatedData['logo'],
         ]);
-    
+
         if ($site) {
             return redirect()->route('backOffice', ['dns' => $site->dns])->with('success', 'Website created successfully');
         } else {
@@ -55,20 +57,21 @@ class BackOfficeController extends Controller
         }
     }
 
-    public function addPage(Request $request){
+    public function addPage(Request $request)
+    {
         $validatedData = $request->validate([
             'titre' => 'required|string|max:255',
             'idSite' => 'required|integer',
         ]);
 
         $path = sprintf("%s.%s", Site::find($validatedData['idSite'])->dns, $validatedData['titre']);
-    
+
         $page = Page::create([
             'nom' => $validatedData['titre'],
             'idSite' => $validatedData['idSite'],
             'dns' => $path,
         ]);
-    
+
         if ($page) {
             return redirect()->route('backOffice', ['dns' => Site::find($validatedData['idSite'])->dns])->with('success', 'Page created successfully');
         } else {
@@ -77,43 +80,45 @@ class BackOfficeController extends Controller
     }
 
     public function addBloc(Request $request)
-{
-    $validatedData = $request->validate([
-        'blocks' => 'required|array',
-        'idPage' => 'required|integer',
-    ]);
-
-    $blocksData = $validatedData['blocks'];
-    $idPage = $validatedData['idPage'];
-
-    Bloc::where('idPage', $idPage)->delete();
-
-    foreach ($blocksData as $blockData) {
-        Bloc::create([
-            'idPage' => $idPage,
-            'type' => $blockData['type'],
-            'ordre' => $blockData['order'],
-            'hauteur' => $blockData['height'],
-            'contenu' => $blockData['contenu'] ?? null
+    {
+        $validatedData = $request->validate([
+            'blocks' => 'required|array',
+            'idPage' => 'required|integer',
         ]);
+
+        $blocksData = $validatedData['blocks'];
+        $idPage = $validatedData['idPage'];
+
+        Bloc::where('idPage', $idPage)->delete();
+
+        foreach ($blocksData as $blockData) {
+            Bloc::create([
+                'idPage' => $idPage,
+                'type' => $blockData['type'],
+                'ordre' => $blockData['order'],
+                'hauteur' => $blockData['height'],
+                'contenu' => $blockData['contenu'] ?? null
+            ]);
+        }
+
+        return response()->json($blocksData);
     }
 
-    return response()->json($blocksData);
-}
 
-    
-    
+
     public function index($siteDns)
     {
         $site = Site::where('dns', $siteDns)->firstOrFail();
-    
+
         $pages = Page::where('idSite', $site->idSite)
-        ->with(['blocs' => function($query) {
-            $query->orderBy('ordre', 'asc');
-        }])->get();
-    
+            ->with([
+                'blocs' => function ($query) {
+                    $query->orderBy('ordre', 'asc');
+                }
+            ])->get();
+
         $commentaires = Commentaire::whereIn('idPage', $pages->pluck('idPage'))->get();
-    
+
         return view('backOffice', [
             'site' => $site,
             'commentaires' => $commentaires,
@@ -123,8 +128,8 @@ class BackOfficeController extends Controller
     }
 
 
-    
-    
 
-  
+
+
+
 }
