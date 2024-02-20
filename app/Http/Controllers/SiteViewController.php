@@ -21,4 +21,19 @@ class SiteViewController extends Controller
             'orientation' => $orientation,
         ]);
     }
+
+    public function showPage($dns)
+    {
+        $page = Page::where('dns', $dns)
+                    ->with('blocs')
+                    ->firstOrFail();
+        $isViewMode = true;
+        $site = Site::where('idSite', $page->idSite)->firstOrFail();
+
+        return view('pageView', [
+            'page' => $page,
+            'site' => $site,
+            'isViewMode' => $isViewMode
+        ]);
+    }
 }
