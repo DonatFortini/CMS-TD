@@ -1,5 +1,5 @@
 @section("form_{$bloc->idBloc}")
-    <div class="content" style="height:{{$bloc->hauteur}}px; border:1px solid red">
+    <div class="content" style="height:{{$bloc->hauteur}}px;">
         <form action="{{ route('page.store') }}" method="post">
             @csrf
             <div class="mb-4">

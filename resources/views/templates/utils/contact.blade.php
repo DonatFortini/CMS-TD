@@ -1,5 +1,5 @@
 @section("contact_{$bloc->idBloc}")
-<div class="flex flex-col items-center justify-center content" style="height:{{$bloc->hauteur}}px; border:1px solid red">
+<div class="flex flex-col items-center justify-center content" style="height:{{$bloc->hauteur}}px;">
     <h1 class="font-bold text-center">Contenu de la page</h1>
     <div id="playground" class="w-3/4">
         <form action="{{ route('contact.store') }}" method="post">

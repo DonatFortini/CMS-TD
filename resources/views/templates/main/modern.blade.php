@@ -26,8 +26,7 @@
                 <h2 class="text-2xl font-semibold mb-4">Related Articles</h2>
                 <ul>
                     @foreach($pages as $page)
-                        <li><a href="{{ url($page->dns) }}" class="text-blue-600 hover:underline">{{ $page->nom }}</a></li>
-                    @endforeach
+                    <li><a href="{{ url('/page/' . $page->dns) }}" class="text-blue-600 hover:underline">{{ $page->nom }}</a></li>                    @endforeach
                 </ul>
             </div>
             <div class="mt-8">
