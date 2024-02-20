@@ -12,7 +12,7 @@ const formDescription2 = document.getElementById('formDescription2');
 const formAuteur = document.getElementById('formAuteur');
 const logo = document.querySelector('#playground #Logo');
 const siteNameInput = document.querySelector('#siteNameBar');
-const final= document.querySelector('#finalisation');
+const previewForm = document.querySelector('#previewForm');
 
 siteNameInput.addEventListener('blur', () => {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -23,15 +23,36 @@ siteNameInput.addEventListener('blur', () => {
     svg.setAttribute("version", "1.1");
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     text.setAttribute("x", "10");
-    text.setAttribute("y", "50");
-    text.setAttribute("font-size", "20");
-    text.setAttribute("font-family", "SixtyFour");
+    text.setAttribute("y", "80");
+    text.setAttribute("font-size", "40");
+    text.setAttribute("font-family", "Arial");
+    text.setAttribute("fill", "red");
+    text.setAttribute("stroke", "black");
+    text.setAttribute("stroke-width", "2");
+    text.setAttribute("transform", "rotate(-15 10 50)");
     text.textContent = siteNameInput.value || "Nom du site";
     svg.appendChild(text);
     while (logo.firstChild) {
         logo.removeChild(logo.firstChild);
     }
     logo.appendChild(svg);
+});
+
+
+previewForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const svg=document.querySelector('#Logo svg');
+    const svgString = new XMLSerializer().serializeToString(svg);
+    const folderPath = 'assets/logoUtilisateur';
+    const fileName = "user/"+siteNameInput.value;
+    const filePath = join(folderPath, fileName);
+    writeFileSync(filePath, svgString);
+    
+    setTimeout(() => {
+        alert('Votre site a été créé avec succès !')
+        const form = e.target;
+        form.submit();
+    }, 2000); 
 });
 
 
@@ -82,9 +103,7 @@ colorPicker.addEventListener('input', () => {
     footer.style.color = textColor;
     const divs = document.querySelectorAll('#playground main div');
     divs.forEach((div) => {
-        if (div.classList.contains('bg-white')) {
-            div.style.color = 'black';
-        }
+        if (div.classList.contains('bg-white')) div.style.color = 'black';
     });
 
 });
@@ -103,7 +122,7 @@ fontColorPicker.addEventListener('input', () => {
 
 
 [...auteurs, ...descriptions1, ...descriptions2].forEach((element) => {
-    element.addEventListener('click', () => { console.log("aa"); makeEditable(element) });
+    element.addEventListener('click', () => { makeEditable(element) });
 });
 
 function darkenColor(color, amount) {
@@ -150,19 +169,12 @@ const makeEditable = (element) => {
 };
 
 function verifyContent(element) {
-    if (element.textContent === "") {
-        element.textContent = "Cliquez pour éditer";
-    }
+    if (element.textContent === "") element.textContent = "Cliquez pour éditer";
 }
 
 const updateFormValue = (element, formField) => {
     const formInput = document.getElementById(formField);
-    if (element && !element.textContent.trim().startsWith('Lorem ipsum')) {
-        formInput.value = element.textContent.trim();
-    } else {
-        formInput.value = null;
-    }
-    console.log(formDescription1, formDescription2, formAuteur);
+    formInput.value = (element && !element.textContent.trim().startsWith('Lorem ipsum')) ? element.textContent.trim() : null;
 };
 
 

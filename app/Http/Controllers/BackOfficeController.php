@@ -7,16 +7,13 @@ use App\Models\Site;
 use App\Models\Commentaire;
 use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
-use App\Services\ImageService;
 use App\Models\Bloc;
 
 class BackOfficeController extends Controller
 {
-    protected $imageService;
-    public function __construct(ImageService $imageService)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->imageService = $imageService;
     }
 
     public function addSite(Request $request)
@@ -52,9 +49,6 @@ class BackOfficeController extends Controller
         ]);
     
         if ($site) {
-            $filename = Auth::user()->email . '_' . $validatedData['site_name'];
-            
-
             return redirect()->route('backOffice', ['dns' => $site->dns])->with('success', 'Website created successfully');
         } else {
             return redirect()->back()->with('error', 'Failed to create website. Please try again.');

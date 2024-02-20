@@ -19,7 +19,7 @@
                     </div>
                     <div class="text-xl font-bold ml-4"><a href="{{ route('home') }}">CMSTD</a></div>
                 </div>
-                <form method="POST" action="{{ route('backOffice.addSite') }}">
+                <form id="previewForm" method="POST" action="{{ route('backOffice.addSite') }}">
                     @csrf
                     <div class="w-full md:flex md:items-center md:w-auto">
                         <div class="md:flex-grow">
