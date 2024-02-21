@@ -47,7 +47,7 @@ document.getElementById('addBlocs').addEventListener('click', function () {
             blockContent = imageSelect ? imageSelect.value : '';
         }
 
-        if ( blockType === 'sous_titre' || blockType === 'titre' || blockType === 'text_zone') {
+        if (blockType === 'sous_titre' || blockType === 'titre' || blockType === 'text_zone') {
             const textArea = li.querySelector('.textarea');
             blockContent = textArea ? textArea.textContent : '';
         }
@@ -115,6 +115,12 @@ function setUp() {
         block.id = `bloc_${counter}`;
         counter++;
     });
+    blocks.forEach(bloc => {
+        bloc.setAttribute('draggable', true);
+        bloc.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('Text', bloc.id);
+        });
+    });
 }
 
 //// section 1
@@ -154,63 +160,63 @@ playground.addEventListener('dragover', function (event) {
 
 playground.addEventListener('drop', function (event) {
     const data = event.dataTransfer.getData('Text');
-    
-    if (!data.includes('bloc')) {
+    if (!data.includes('bloc_')) {
         event.preventDefault();
         const pageId = (new URLSearchParams(window.location.search)).get('page').replace('page_', '');
-        const itemType = document.getElementById(data).getAttribute('data-type');
-        
+        const itemType = document.querySelector(`#${data}`).getAttribute('data-type');
         const newLi = document.createElement('li');
         newLi.setAttribute('data-type', itemType);
         newLi.setAttribute('draggable', true);
-        newLi.id = `block_${new Date().getTime()}`;
-        newLi.classList.add('flex-col', 'bg-slate-300', 'border-2', 'border-black', 'm-5', 'rounded-3xl');
+        newLi.id = `bloc_}`;
+        newLi.classList.add('flex-col', 'bg-slate-300', 'border-2', 'border-black', 'm-5', 'rounded-3xl','cursor-grab');
         newLi.style.height = `${defaultBlockHeights[itemType]}px`;
-        
+
         const container = document.createElement('div');
         container.classList.add('flex', 'justify-between', 'p-2');
-        
+
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('bg-slate-400', 'rounded-3xl', 'hover:bg-red-500', 'hover:text-white', 'transition', 'duration-400', 'inline-block');
-        
+
         const deleteIcon = document.createElement('img');
         deleteIcon.src = '/assets/trash.svg';
         deleteIcon.classList.add('w-7', 'h-7');
-        
+
         const label = document.createElement('label');
         label.textContent = "Type " + itemType;
         label.classList.add('bg-slate-400', 'inline-block');
-        
+
         const div = document.createElement('div');
-    
+
         deleteButton.appendChild(deleteIcon);
         container.appendChild(deleteButton);
         container.appendChild(label);
         newLi.appendChild(container);
-        
+
         fetch(`/get-block-content/${itemType}/${pageId}`)
             .then(response => response.text())
             .then(html => {
                 div.innerHTML = html;
                 newLi.appendChild(div);
-                addResizeFunctionality(newLi);
                 blocksDisposition.appendChild(newLi);
+                setUp();
             })
             .catch(error => console.error('Error fetching block content:', error));
     } else {
-        const item = document.getElementById(data);
+        const item = document.querySelector(`#${data}`);
         const dropPosition = event.target.closest('li');
         blocksDisposition.insertBefore(item, dropPosition.nextSibling);
+        setUp();
     }
+
     
-    setUp();
 });
 
 deleteButtons.forEach(button => {
     button.addEventListener('click', function () {
-        const num= this.id.split('_')[1];
+        const num = this.id.split('_')[1];
         const bloc = document.querySelector(`#bloc_${num}`);
         bloc.remove();
+        setUp();
     });
 });
 
