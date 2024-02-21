@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Site;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use App\Models\Commentaire;
 
 class SiteViewController extends Controller
 {
@@ -29,11 +30,13 @@ class SiteViewController extends Controller
                     ->firstOrFail();
         $isViewMode = true;
         $site = Site::where('idSite', $page->idSite)->firstOrFail();
+        $commentaires = Commentaire::where('idPage', $page->idPage)->get();
 
         return view('pageView', [
             'page' => $page,
             'site' => $site,
-            'isViewMode' => $isViewMode
+            'isViewMode' => $isViewMode,
+            'commentaires' => $commentaires,
         ]);
     }
 }

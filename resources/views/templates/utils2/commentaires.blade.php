@@ -1,9 +1,10 @@
-<div class="flex">
-    <div class="w-1/2 overflow-y-auto">
+<div class="flex w-screen ">
+    <div class="w-1/2 overflow-y-auto ">
         <!-- Partie gauche - Affichage des commentaires -->
         @foreach($commentaires as $commentaire)
-        <div class="bg-gray-100 p-4 rounded-lg mb-4">
+        <div class="bg-gray-100 p-4 rounded-lg mb-4 w-3/4">
             <p>{{ $commentaire->contenu }}</p>
+            <p>{{ $commentaire->date_creation }}</p>
         </div>
         @endforeach
     </div>
