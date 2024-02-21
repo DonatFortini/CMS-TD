@@ -14,7 +14,8 @@ class BlockController extends Controller
         'titre' => 100,
         'sous_titre' => 80,
         'form' => 450,
-        'contact' => 400
+        'contact' => 400,
+        'commentaires' => 400,
     ];
 
     protected $defaultBlockContent = [
@@ -23,7 +24,8 @@ class BlockController extends Controller
         'titre' => 'Choisissez un titre pour votre block',
         'sous_titre' => 'Choisissez un sous-titre pour votre block',
         'form' => '',
-        'contact' => ''
+        'contact' => '',
+        'commentaires' => '',
     ];
 
     public function getBlockContent($type, $idPage)

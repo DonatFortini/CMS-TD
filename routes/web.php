@@ -55,6 +55,8 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::post('/comment', 'App\Http\Controllers\CommentsController@store')->name('comments.store');
+
 Route::get('/page/{dns}', 'App\Http\Controllers\SiteViewController@showPage')->where('dns', '.*.*')->name('showPage');
 
 Route::get('/{dns}', 'App\Http\Controllers\SiteViewController@showSite')->where('dns', '.*')->name('showSite');

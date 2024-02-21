@@ -17,4 +17,20 @@ class CommentsController extends Controller
 
         return redirect()->back()->with('success', 'Comment deleted successfully.');
     }
+
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'contenu' => 'required',
+        ]);
+
+        Commentaire::create([
+            'contenu' => $data['contenu'],
+            'date_creation' => now(),
+            'idPage' => $request->idPage,
+        ]);
+
+        return redirect()->back()->with('success', 'Comment added successfully.');
+    }
 }
