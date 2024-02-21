@@ -113,12 +113,15 @@ function setUp() {
     blocks.forEach(block => {
         addResizeFunctionality(block);
         block.id = `bloc_${counter}`;
+        block.querySelector("#blocTop button").id = `deletebloc_${counter}`;
+        block.querySelector("#blocTop button").addEventListener('click', function () {
+            block.remove();
+            setUp();
+        });
         counter++;
-    });
-    blocks.forEach(bloc => {
-        bloc.setAttribute('draggable', true);
-        bloc.addEventListener('dragstart', function (event) {
-            event.dataTransfer.setData('Text', bloc.id);
+        block.setAttribute('draggable', true);
+        block.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('Text', block.id);
         });
     });
 }
@@ -168,13 +171,15 @@ playground.addEventListener('drop', function (event) {
         newLi.setAttribute('data-type', itemType);
         newLi.setAttribute('draggable', true);
         newLi.id = `bloc_}`;
-        newLi.classList.add('flex-col', 'bg-slate-300', 'border-2', 'border-black', 'm-5', 'rounded-3xl','cursor-grab');
+        newLi.classList.add('flex-col', 'bg-slate-300', 'border-2', 'border-black', 'm-5', 'rounded-3xl', 'cursor-grab');
         newLi.style.height = `${defaultBlockHeights[itemType]}px`;
 
         const container = document.createElement('div');
+        container.id = "blocTop";
         container.classList.add('flex', 'justify-between', 'p-2');
 
         const deleteButton = document.createElement('button');
+        deleteButton.id = `deletebloc_}`;
         deleteButton.classList.add('bg-slate-400', 'rounded-3xl', 'hover:bg-red-500', 'hover:text-white', 'transition', 'duration-400', 'inline-block');
 
         const deleteIcon = document.createElement('img');
@@ -208,7 +213,7 @@ playground.addEventListener('drop', function (event) {
         setUp();
     }
 
-    
+
 });
 
 deleteButtons.forEach(button => {
