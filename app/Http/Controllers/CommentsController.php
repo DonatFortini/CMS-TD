@@ -23,14 +23,14 @@ class CommentsController extends Controller
     {
         $data = $request->validate([
             'contenu' => 'required',
+            'idPage' => 'required',
         ]);
 
         Commentaire::create([
             'contenu' => $data['contenu'],
             'date_creation' => now(),
-            'idPage' => $request->idPage,
+            'idPage' => $data['idPage'],
         ]);
-
         return redirect()->back()->with('success', 'Comment added successfully.');
     }
 }
